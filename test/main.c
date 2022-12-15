@@ -1,6 +1,6 @@
 #include "r2k_test/r2k_test.h"
-#include "r2k_test/internal/color_print.h"
-#include "r2k_test/internal/print_util.h"
+#include "r2k_test/internal/r2k_color_print.h"
+#include "r2k_test/internal/r2k_print_util.h"
 
 #include <stdio.h>
 #include <stdbool.h>
