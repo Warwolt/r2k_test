@@ -6,9 +6,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define TEST_SUITE_START(runner) \
+#define TEST_SUITE_START() \
     test_suite_t g_suite = (test_suite_t) { \
-        .test_runner = runner, \
+        .test_runner = _r2k_internal_get_test_runner(), \
         .name = __func__, \
         .num_ran_tests = 0, \
         .current_test = { \
@@ -22,7 +22,7 @@
     printf("Running tests from %s\n", __func__)
 
 
-#define TEST_SUITE_END(runner) \
+#define TEST_SUITE_END() \
     print_case_result(&g_suite.current_test); \
     printf_green("[----------] "); \
     printf("%d test%s from %s (0 ms total)\n\n", \
@@ -68,8 +68,8 @@ void r2k_start_test_case(test_suite_t* suite, const char* case_name) {
     suite->test_runner->num_tests += 1;
 }
 
-void dummy_tests(r2k_test_runner_t* runner) {
-    TEST_SUITE_START(runner);
+void dummy_tests() {
+    TEST_SUITE_START();
 
     TEST(expect_integers) {
         EXPECT_EQ(2 + 2, 5);
@@ -96,14 +96,14 @@ void dummy_tests(r2k_test_runner_t* runner) {
         EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
     }
 
-    TEST_SUITE_END(runner);
+    TEST_SUITE_END();
 }
 
 int main(void) {
-    r2k_test_runner_t runner = r2k_test_start();
+    r2k_test_start();
 
-    dummy_tests(&runner);
+    dummy_tests();
 
-    r2k_test_end(&runner);
+    r2k_test_end();
     return 0;
 }
