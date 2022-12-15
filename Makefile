@@ -14,7 +14,7 @@ main: $(OBJ)
 
 $(OUT_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	gcc -c $^ --std=c11 -Iinclude -Wall -Werror -o $@
+	gcc -c $^ --std=c99 -Iinclude -Wall -Werror -o $@
 
 clean:
 	@rm -rf $(OUT_DIR)
