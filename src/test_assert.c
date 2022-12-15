@@ -7,16 +7,17 @@
 
 bool check_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len) {
     if (actual != expected) {
-        if (isprint(actual)) {
-            snprintf(actual_str, buf_len, "%d ('%c')", actual, actual);
-        } else {
-            snprintf(actual_str, buf_len, "%d", actual);
-        }
-        if (isprint(expected)) {
-            snprintf(expected_str, buf_len, "%d ('%c')", expected, expected);
-        } else {
-            snprintf(expected_str, buf_len, "%d", expected);
-        }
+        snprintf(actual_str, buf_len, "%d", actual);
+        snprintf(expected_str, buf_len, "%d", expected);
+        return false;
+    }
+    return true;
+}
+
+bool check_char_eq(char actual, char expected, char* actual_str, char* expected_str, int buf_len) {
+    if (actual != expected) {
+        snprintf(actual_str, buf_len, "%c (%d)", actual, actual);
+        snprintf(expected_str, buf_len, "%c (%d)", expected, expected);
         return false;
     }
     return true;

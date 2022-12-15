@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 bool check_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len);
+bool check_char_eq(char actual, char expected, char* actual_str, char* expected_str, int buf_len);
 bool check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected_str, int buf_len);
 
 #define RUN_EXPECT_EQ(_actual, _expected, value_checker) \
@@ -20,14 +21,8 @@ bool check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected
         } \
     }
 
-/**
- * Check equality between integral values
- */
 #define EXPECT_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, check_int_eq)
-
-/**
- * Check equality between pointer values
- */
+#define EXPECT_CHAR_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, check_char_eq)
 #define EXPECT_PTR_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, check_ptr_eq)
 
 #endif // R2K_TEST_ASSERT_H

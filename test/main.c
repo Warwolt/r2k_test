@@ -60,8 +60,7 @@ void dummy_tests(r2k_test_runner_t* runner) {
     EXPECT_EQ(2 + 2, 5);
 
     start_test_case(runner, &g_suite, "world");
-    char letter = 'A';
-    EXPECT_EQ(letter, 'a');
+    EXPECT_CHAR_EQ('A', 'a');
 
     start_test_case(runner, &g_suite, "pointers");
     int arr[2] = { 1, 2 };
