@@ -2,13 +2,13 @@
 
 all: directories main
 
-main: src/main.c
-	gcc $^ -Iinclude -Wall -Werror -o build/$@
+main: test/main.c
+	@gcc $^ -Iinclude -Wall -Werror -o build/$@
 
 directories: build
 
 build:
-	mkdir -p $@
+	@mkdir -p $@
 
 clean:
-	rm -rf build
+	@rm -rf build
