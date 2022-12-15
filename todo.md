@@ -6,7 +6,7 @@
 - [x] 1 passing test
 - [x] 1 failing test with EXPECT_EQ
 - [x] print args to EXPECT_EQ on failure
-  - [x] additionally print integer in ASCII range as char
+  - ~~[x] additionally print integer in ASCII range as char~~
   - [x] write to buffer and make single printf call
   - [x] evaluate `actual` and `expected` only once in assertion
   - [ ] EXPECT_NEAR for `float` and `double`

@@ -66,8 +66,10 @@ void dummy_tests(r2k_test_runner_t* runner) {
     int arr[2] = { 1, 2 };
     EXPECT_PTR_EQ(&arr[0], &arr[1]);
 
-    print_case_result(&g_suite.current_test);
+    start_test_case(runner, &g_suite, "float");
+    EXPECT_FLOAT_NEAR(1.00, 2.001, 0.01);
 
+    print_case_result(&g_suite.current_test);
     printf_green("[----------] ");
     printf("%d test%s from %s (0 ms total)\n\n",
         g_suite.num_ran_tests,
