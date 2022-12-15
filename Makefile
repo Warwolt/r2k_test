@@ -1,14 +1,19 @@
-.PHONY: directories clean
+.PHONY: clean
 
-all: directories main
+OUT_DIR = build
 
-main: test/main.c
-	@gcc $^ -Iinclude -Wall -Werror -o build/$@
+SRC = \
+	test/main.c \
+	src/r2k_test.c
 
-directories: build
+OBJ = $(patsubst %.c,$(OUT_DIR)/%.o,$(SRC))
 
-build:
-	@mkdir -p $@
+main: $(OBJ)
+	@gcc $^ -Iinclude -Wall -Werror -o $(OUT_DIR)/$@
+
+$(OUT_DIR)/%.o: %.c
+	@mkdir -p $(@D)
+	@gcc -c $^ -Iinclude -Wall -Werror -o $@
 
 clean:
-	@rm -rf build
+	@rm -rf $(OUT_DIR)

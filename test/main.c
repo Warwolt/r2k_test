@@ -10,12 +10,7 @@
 
 #include "r2k_test/internal/windows.h"
 #include "r2k_test/internal/color_print.h"
-
-typedef struct test_runner {
-    size_t num_tests;
-    size_t num_suites;
-    size_t num_milliseconds;
-} test_runner_t;
+#include "r2k_test/r2k_test.h"
 
 void init_terminal(void) {
 #ifdef WIN32
