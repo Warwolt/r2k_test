@@ -17,3 +17,4 @@
 - [ ] print suite duration in ms
 - [ ] print total duration in ms
 - [x] make the `r2k_test_runner_t` hidden (extern, global, some trick like that)
+- [ ] go through what should be public and what should be internal

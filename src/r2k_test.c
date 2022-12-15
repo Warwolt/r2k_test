@@ -36,3 +36,26 @@ void r2k_test_end() {
         test_runner->num_milliseconds
     );
 }
+
+void r2k_test_case_start(test_suite_t* suite, const char* case_name) {
+    if (suite->num_ran_tests > 0) {
+        r2k_print_case_result(&suite->current_test);
+    }
+
+    suite->num_ran_tests += 1;
+    suite->current_test.name = case_name;
+    suite->current_test.successful = true;
+
+    printf_green("[ RUN      ] ");
+    printf("%s.%s\n", suite->name, suite->current_test.name);
+    suite->test_runner->num_tests += 1;
+}
+
+void r2k_print_case_result(const test_case_t* test) {
+    if (test->successful) {
+        printf_green("[       OK ] ");
+    } else {
+        printf_red("[  FAILED  ] ");
+    }
+    printf("%s.%s (0 ms)\n", test->suite, test->name);
+}
