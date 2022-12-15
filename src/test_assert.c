@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-bool check_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len) {
+bool r2k_check_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len) {
     if (actual != expected) {
         snprintf(actual_str, buf_len, "%d", actual);
         snprintf(expected_str, buf_len, "%d", expected);
@@ -15,7 +15,7 @@ bool check_int_eq(int actual, int expected, char* actual_str, char* expected_str
     return true;
 }
 
-bool check_char_eq(char actual, char expected, char* actual_str, char* expected_str, int buf_len) {
+bool r2k_check_char_eq(char actual, char expected, char* actual_str, char* expected_str, int buf_len) {
     if (actual != expected) {
         snprintf(actual_str, buf_len, "%c (%d)", actual, actual);
         snprintf(expected_str, buf_len, "%c (%d)", expected, expected);
@@ -24,7 +24,7 @@ bool check_char_eq(char actual, char expected, char* actual_str, char* expected_
     return true;
 }
 
-bool check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected_str, int buf_len) {
+bool r2k_check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected_str, int buf_len) {
     if (actual != expected) {
         snprintf(actual_str, buf_len, "0x%p", actual);
         snprintf(expected_str, buf_len, "0x%p", expected);
@@ -33,7 +33,7 @@ bool check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected
     return true;
 }
 
-bool check_str_eq(const char* actual, const char* expected, char* actual_str, char* expected_str, int buf_len) {
+bool r2k_check_str_eq(const char* actual, const char* expected, char* actual_str, char* expected_str, int buf_len) {
     if (strcmp(actual, expected) != 0) {
         snprintf(actual_str, buf_len, "\"%s\"", actual);
         snprintf(expected_str, buf_len, "\"%s\"", expected);
@@ -42,7 +42,7 @@ bool check_str_eq(const char* actual, const char* expected, char* actual_str, ch
     return true;
 }
 
-bool check_float_near(float actual, float expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
+bool r2k_check_float_near(float actual, float expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
     if (abs(actual - expected) > abs_error) {
         snprintf(actual_str, buf_len, "%f", actual);
         snprintf(expected_str, buf_len, "%f", expected);
@@ -51,7 +51,7 @@ bool check_float_near(float actual, float expected, float abs_error, char* actua
     return true;
 }
 
-bool check_double_near(double actual, double expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
+bool r2k_check_double_near(double actual, double expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
     if (abs(actual - expected) > abs_error) {
         snprintf(actual_str, buf_len, "%f", actual);
         snprintf(expected_str, buf_len, "%f", expected);
