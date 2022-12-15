@@ -17,7 +17,10 @@
             .successful = false, \
         }, \
     }; \
-    g_suite.test_runner->num_suites += 1
+    g_suite.test_runner->num_suites += 1; \
+    printf_green("[----------] "); \
+    printf("Running tests from %s\n", __func__)
+
 
 #define TEST_SUITE_END(runner) \
     print_case_result(&g_suite.current_test); \
@@ -27,6 +30,7 @@
         plural_suffix(g_suite.num_ran_tests), \
         g_suite.name \
     )
+#define TEST(test_name) r2k_start_test_case(&g_suite, test_name);
 
 typedef struct test_case {
     const char* suite;
@@ -50,7 +54,7 @@ void print_case_result(const test_case_t* test) {
     printf("%s.%s (0 ms)\n", test->suite, test->name);
 }
 
-void start_test_case(test_suite_t* suite, const char* case_name) {
+void r2k_start_test_case(test_suite_t* suite, const char* case_name) {
     if (suite->num_ran_tests > 0) {
         print_case_result(&suite->current_test);
     }
@@ -67,27 +71,30 @@ void start_test_case(test_suite_t* suite, const char* case_name) {
 void dummy_tests(r2k_test_runner_t* runner) {
     TEST_SUITE_START(runner);
 
-    printf_green("[----------] ");
-    printf("Running tests from %s\n", __func__);
+    TEST("integers") {
+        EXPECT_EQ(2 + 2, 5);
+    }
 
-    start_test_case(&g_suite, "integers");
-    EXPECT_EQ(2 + 2, 5);
+    TEST("chars") {
+        EXPECT_CHAR_EQ('A', 'a');
+    }
 
-    start_test_case(&g_suite, "chars");
-    EXPECT_CHAR_EQ('A', 'a');
+    TEST("pointers") {
+        int a, b;
+        EXPECT_PTR_EQ(&a, &b);
+    }
 
-    start_test_case(&g_suite, "pointers");
-    int a, b;
-    EXPECT_PTR_EQ(&a, &b);
+    TEST("strings") {
+        EXPECT_STR_EQ("foo", "bar");
+    }
 
-    start_test_case(&g_suite, "strings");
-    EXPECT_STR_EQ("foo", "bar");
+    TEST("float") {
+        EXPECT_FLOAT_NEAR(1.0f, 2.0f, 0.01);
+    }
 
-    start_test_case(&g_suite, "float");
-    EXPECT_FLOAT_NEAR(1.0f, 2.0f, 0.01);
-
-    start_test_case(&g_suite, "double");
-    EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
+    TEST("double") {
+        EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
+    }
 
     TEST_SUITE_END(runner);
 }
