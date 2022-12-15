@@ -6,13 +6,13 @@
 #include <stdbool.h>
 #include <string.h>
 
+// TODO move most of this into a function in a `r2k_test_suite.h` file
 #define TEST_SUITE_START() \
     test_suite_t g_suite = (test_suite_t) { \
         .test_runner = _r2k_internal_get_test_runner(), \
         .name = __func__, \
         .num_ran_tests = 0, \
         .current_test = { \
-            .suite = __func__, \
             .name = NULL, \
             .successful = false, \
         }, \
@@ -24,7 +24,7 @@
 
 #define TEST_SUITE_END() \
     if (g_suite.num_ran_tests > 0) { \
-        r2k_test_case_end(&g_suite.current_test); \
+        r2k_test_case_end(&g_suite); \
     } \
     printf_green("[----------] "); \
     printf("%d test%s from %s (0 ms total)\n\n", \
@@ -37,6 +37,10 @@
 
 void dummy_tests() {
     TEST_SUITE_START();
+
+    TEST(expect_integers_ok) {
+        EXPECT_EQ(2 + 2, 4);
+    }
 
     TEST(expect_integers) {
         EXPECT_EQ(2 + 2, 5);

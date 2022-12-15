@@ -11,6 +11,7 @@
   - [x] evaluate `actual` and `expected` only once in assertion
   - [x] EXPECT_NEAR for `float` and `double`
   - [x] EXPECT_STR_EQ for `const char*`
+- [ ] print num passed tests at end of run
 - [ ] print num failed tests at end of run
 - [ ] let EXPECT_EQ take optional error message string
 - [ ] print test case duration in ms

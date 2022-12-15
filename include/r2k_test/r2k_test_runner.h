@@ -6,7 +6,9 @@
 typedef struct r2k_test_runner {
     size_t num_tests;
     size_t num_suites;
-    size_t num_milliseconds;
+    size_t num_passed;
+    size_t num_failed;
+    size_t total_milliseconds;
 } r2k_test_runner_t;
 
 void _r2k_internal_init_test_runner();

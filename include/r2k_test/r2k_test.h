@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 typedef struct test_case {
-    const char* suite;
     const char* name;
     bool successful;
 } test_case_t;
@@ -23,6 +22,6 @@ void r2k_test_start(void);
 void r2k_test_end();
 
 void r2k_test_case_start(test_suite_t* suite, const char* case_name);
-void r2k_test_case_end(const test_case_t* test);
+void r2k_test_case_end(test_suite_t* suite);
 
 #endif // R2K_TEST_H

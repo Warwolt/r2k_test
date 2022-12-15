@@ -33,14 +33,17 @@ void r2k_test_end() {
         plural_suffix(test_runner->num_tests),
         test_runner->num_suites,
         plural_suffix(test_runner->num_suites),
-        test_runner->num_milliseconds
+        test_runner->total_milliseconds
     );
+
+    printf_green("[  PASSED  ] ");
+    printf("%d test%s.\n", test_runner->num_passed, plural_suffix(test_runner->num_passed));
 }
 
 void r2k_test_case_start(test_suite_t* suite, const char* case_name) {
     // finish previous test case
     if (suite->num_ran_tests > 0) {
-        r2k_test_case_end(&suite->current_test);
+        r2k_test_case_end(suite);
     }
 
     // start current test case
@@ -53,11 +56,13 @@ void r2k_test_case_start(test_suite_t* suite, const char* case_name) {
     printf("%s.%s\n", suite->name, suite->current_test.name);
 }
 
-void r2k_test_case_end(const test_case_t* test) {
-    if (test->successful) {
+void r2k_test_case_end(test_suite_t* suite) {
+    if (suite->current_test.successful) {
+        suite->test_runner->num_passed += 1;
         printf_green("[       OK ] ");
     } else {
+        suite->test_runner->num_failed += 1;
         printf_red("[  FAILED  ] ");
     }
-    printf("%s.%s (0 ms)\n", test->suite, test->name);
+    printf("%s.%s (0 ms)\n", suite->name, suite->current_test.name);
 }
