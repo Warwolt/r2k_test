@@ -23,16 +23,15 @@ bool expect_ptr_eq(const void* actual, const void* expected, char* actual_str, c
     return true;
 }
 
-#define EXPECT_INT_OR_PTR_EQ(actual, expected, actual_str, expected_str, buf_len) _Generic((actual), \
+#define CHECK_INT_OR_PTR_EQ(actual, expected, actual_str, expected_str, buf_len) _Generic((actual), \
       int: expect_int_eq((int)(actual), (int)(expected), actual_str, expected_str, buf_len), \
       default: expect_ptr_eq((void *)(actual), (void *)(expected), actual_str, expected_str, buf_len))
 
-// used for checking equality between integral or pointer types
-#define EXPECT_EQ(_actual, _expected) \
+#define RUN_EXPECT_EQ(_actual, _expected, checker_macro) \
     { \
         char actual_str[100]; \
         char expected_str[100]; \
-        suite.current_test.successful = EXPECT_INT_OR_PTR_EQ(_actual, _expected, actual_str, expected_str, 100); \
+        suite.current_test.successful = checker_macro(_actual, _expected, actual_str, expected_str, 100); \
         if (!suite.current_test.successful) { \
             printf("%s:%d: Failure\n", __FILE__, __LINE__); \
             printf("Value of: %s\n", #_actual); \
@@ -40,6 +39,9 @@ bool expect_ptr_eq(const void* actual, const void* expected, char* actual_str, c
             printf("Expected: %s\n", expected_str); \
         } \
     }
+
+// used for checking equality between integral or pointer types
+#define EXPECT_EQ(_actual, _expected) RUN_EXPECT_EQ(_actual, _expected, CHECK_INT_OR_PTR_EQ)
 
 typedef struct test_case {
     const char* suite;
