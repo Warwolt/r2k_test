@@ -67,7 +67,10 @@ void dummy_tests(r2k_test_runner_t* runner) {
     EXPECT_PTR_EQ(&arr[0], &arr[1]);
 
     start_test_case(runner, &g_suite, "float");
-    EXPECT_FLOAT_NEAR(1.00, 2.001, 0.01);
+    EXPECT_FLOAT_NEAR(1.0f, 2.0f, 0.01);
+
+    start_test_case(runner, &g_suite, "double");
+    EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
 
     print_case_result(&g_suite.current_test);
     printf_green("[----------] ");

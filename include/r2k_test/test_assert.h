@@ -7,7 +7,9 @@
 bool check_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len);
 bool check_char_eq(char actual, char expected, char* actual_str, char* expected_str, int buf_len);
 bool check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected_str, int buf_len);
+
 bool check_float_near(float actual, float expected, float abs_error, char* actual_str, char* expected_str, int buf_len);
+bool check_double_near(double actual, double expected, float abs_error, char* actual_str, char* expected_str, int buf_len);
 
 #define RUN_EXPECT_EQ(_actual, _expected, value_checker) \
     { \
@@ -41,5 +43,6 @@ bool check_float_near(float actual, float expected, float abs_error, char* actua
 #define EXPECT_PTR_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, check_ptr_eq)
 
 #define EXPECT_FLOAT_NEAR(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, check_float_near)
+#define EXPECT_DOUBLE_NEAR(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, check_double_near)
 
 #endif // R2K_TEST_ASSERT_H

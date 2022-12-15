@@ -41,3 +41,12 @@ bool check_float_near(float actual, float expected, float abs_error, char* actua
     }
     return true;
 }
+
+bool check_double_near(double actual, double expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
+    if (abs(actual - expected) > abs_error) {
+        snprintf(actual_str, buf_len, "%f", actual);
+        snprintf(expected_str, buf_len, "%f", expected);
+        return false;
+    }
+    return true;
+}
