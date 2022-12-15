@@ -4,10 +4,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define EXPECT_EQ(expected, actual) \
-    if (expected != actual) { \
+#define EXPECT_EQ(actual, expected) \
+    if (actual != expected) { \
         suite.current_test.successful = false; \
         printf("%s:%d: Failure\n", __FILE__, __LINE__); \
+        printf("Value of: %s\n", #actual); \
     }
 
 typedef struct test_case {
@@ -61,7 +62,7 @@ void dummy_tests(r2k_test_runner_t* runner) {
     printf("Running tests from %s\n", __func__);
 
     start_test_case(runner, &suite, "hello");
-    EXPECT_EQ(1, 2);
+    EXPECT_EQ(2 + 2, 5);
 
     start_test_case(runner, &suite, "world");
 
