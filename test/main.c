@@ -30,7 +30,7 @@
         plural_suffix(g_suite.num_ran_tests), \
         g_suite.name \
     )
-#define TEST(test_name) r2k_start_test_case(&g_suite, test_name);
+#define TEST(test_name) r2k_start_test_case(&g_suite, #test_name);
 
 typedef struct test_case {
     const char* suite;
@@ -71,28 +71,28 @@ void r2k_start_test_case(test_suite_t* suite, const char* case_name) {
 void dummy_tests(r2k_test_runner_t* runner) {
     TEST_SUITE_START(runner);
 
-    TEST("integers") {
+    TEST(expect_integers) {
         EXPECT_EQ(2 + 2, 5);
     }
 
-    TEST("chars") {
+    TEST(expect_chars) {
         EXPECT_CHAR_EQ('A', 'a');
     }
 
-    TEST("pointers") {
+    TEST(expect_pointers) {
         int a, b;
         EXPECT_PTR_EQ(&a, &b);
     }
 
-    TEST("strings") {
+    TEST(expect_strings) {
         EXPECT_STR_EQ("foo", "bar");
     }
 
-    TEST("float") {
+    TEST(expect_float) {
         EXPECT_FLOAT_NEAR(1.0f, 2.0f, 0.01);
     }
 
-    TEST("double") {
+    TEST(expect_double) {
         EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
     }
 
