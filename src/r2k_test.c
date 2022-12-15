@@ -2,15 +2,12 @@
 
 #include "r2k_test/internal/windows.h"
 #include "r2k_test/internal/color_print.h"
+#include "r2k_test/internal/print_util.h"
 
 static void init_terminal(void) {
 #ifdef WIN32
     enable_windows_virtual_terminal();
 #endif // WIN32
-}
-
-static const char* plural(int x) {
-    return x == 1 ? "" : "s";
 }
 
 r2k_test_runner_t r2k_test_start(void) {
@@ -36,9 +33,9 @@ void r2k_test_end(const r2k_test_runner_t* runner) {
     printf_green("[==========] ");
     printf("%d test%s from %d test suite%s ran. (%d ms total)\n",
         runner->num_tests,
-        plural(runner->num_tests),
+        plural_suffix(runner->num_tests),
         runner->num_suites,
-        plural(runner->num_suites),
+        plural_suffix(runner->num_suites),
         runner->num_milliseconds
     );
 }

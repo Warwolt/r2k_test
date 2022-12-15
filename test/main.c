@@ -1,5 +1,6 @@
 #include "r2k_test/r2k_test.h"
 #include "r2k_test/internal/color_print.h"
+#include "r2k_test/internal/print_util.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -69,7 +70,11 @@ void dummy_tests(r2k_test_runner_t* runner) {
     print_case_result(&g_suite.current_test);
 
     printf_green("[----------] ");
-    printf("1 test from %s (0 ms total)\n\n", __func__);
+    printf("%d test%s from %s (0 ms total)\n\n",
+        g_suite.num_ran_tests,
+        plural_suffix(g_suite.num_ran_tests),
+        g_suite.name
+    );
 }
 
 int main(void) {
