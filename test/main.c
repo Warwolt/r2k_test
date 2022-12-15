@@ -56,15 +56,18 @@ void dummy_tests(r2k_test_runner_t* runner) {
     printf_green("[----------] ");
     printf("Running tests from %s\n", __func__);
 
-    start_test_case(runner, &g_suite, "hello");
+    start_test_case(runner, &g_suite, "integers");
     EXPECT_EQ(2 + 2, 5);
 
-    start_test_case(runner, &g_suite, "world");
+    start_test_case(runner, &g_suite, "chars");
     EXPECT_CHAR_EQ('A', 'a');
 
     start_test_case(runner, &g_suite, "pointers");
-    int arr[2] = { 1, 2 };
-    EXPECT_PTR_EQ(&arr[0], &arr[1]);
+    int a, b;
+    EXPECT_PTR_EQ(&a, &b);
+
+    start_test_case(runner, &g_suite, "strings");
+    EXPECT_STR_EQ("foo", "bar");
 
     start_test_case(runner, &g_suite, "float");
     EXPECT_FLOAT_NEAR(1.0f, 2.0f, 0.01);

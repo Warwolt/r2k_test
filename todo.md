@@ -9,8 +9,8 @@
   - ~~[x] additionally print integer in ASCII range as char~~
   - [x] write to buffer and make single printf call
   - [x] evaluate `actual` and `expected` only once in assertion
-  - [ ] EXPECT_NEAR for `float` and `double`
-  - [ ] EXPECT_STR_EQ for `const char*`
+  - [x] EXPECT_NEAR for `float` and `double`
+  - [x] EXPECT_STR_EQ for `const char*`
 - [ ] print num failed tests at end of run
 - [ ] let EXPECT_EQ take optional error message string
 - [ ] print test case duration in ms

@@ -33,6 +33,15 @@ bool check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected
     return true;
 }
 
+bool check_str_eq(const char* actual, const char* expected, char* actual_str, char* expected_str, int buf_len) {
+    if (strcmp(actual, expected) != 0) {
+        snprintf(actual_str, buf_len, "\"%s\"", actual);
+        snprintf(expected_str, buf_len, "\"%s\"", expected);
+        return false;
+    }
+    return true;
+}
+
 bool check_float_near(float actual, float expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
     if (abs(actual - expected) > abs_error) {
         snprintf(actual_str, buf_len, "%f", actual);
