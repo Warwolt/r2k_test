@@ -4,6 +4,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define EXPECT_EQ(expected, actual) \
+    if (expected != actual) { \
+        suite.current_test.successful = false; \
+        printf("%s:%d: Failure\n", __FILE__, __LINE__); \
+    }
+
 typedef struct test_case {
     const char* suite;
     const char* name;
@@ -17,7 +23,11 @@ typedef struct test_suite {
 } test_suite_t;
 
 void print_case_result(const test_case_t* test) {
-    printf_green("[       OK ] ");
+    if (test->successful) {
+        printf_green("[       OK ] ");
+    } else {
+        printf_red("[  FAILED  ] ");
+    }
     printf("%s.%s (0 ms)\n", test->suite, test->name);
 }
 
@@ -28,6 +38,7 @@ void start_test_case(r2k_test_runner_t* runner, test_suite_t* suite, const char*
 
     suite->num_ran_tests += 1;
     suite->current_test.name = case_name;
+    suite->current_test.successful = true;
 
     printf_green("[ RUN      ] ");
     printf("%s.%s\n", suite->name, suite->current_test.name);
@@ -50,14 +61,14 @@ void dummy_tests(r2k_test_runner_t* runner) {
     printf("Running tests from %s\n", __func__);
 
     start_test_case(runner, &suite, "hello");
+    EXPECT_EQ(1, 2);
+
     start_test_case(runner, &suite, "world");
 
     print_case_result(&suite.current_test);
 
     printf_green("[----------] ");
     printf("1 test from %s (0 ms total)\n\n", __func__);
-
-    runner->num_tests += suite.num_ran_tests;
 }
 
 int main(void) {
