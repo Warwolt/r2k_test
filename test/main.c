@@ -4,24 +4,28 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define FORMAT_SPEC(x) _Generic((x), \
-      int: "%d", \
-      double: "%f", \
-      char *: "%s", \
-      default: "%x")
+bool expect_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len) {
+    if (actual != expected) {
+        snprintf(actual_str, buf_len, "%d", actual);
+        snprintf(expected_str, buf_len, "%d", expected);
+        return false;
+    }
+    return true;
+}
 
 #define EXPECT_EQ(actual, expected) \
-    if (actual != expected) { \
-        suite.current_test.successful = false; \
-        printf("%s:%d: Failure\n", __FILE__, __LINE__); \
-        printf("Value of: %s\n", #actual); \
-        printf("  Actual: "); \
-        printf(FORMAT_SPEC(actual), actual); \
-        printf("\n"); \
-        printf("Expected: "); \
-        printf(FORMAT_SPEC(expected), expected); \
-        printf("\n"); \
+    { \
+        char actual_str[100]; \
+        char expected_str[100]; \
+        suite.current_test.successful = expect_int_eq(actual, expected, actual_str, expected_str, 100); \
+        if (!suite.current_test.successful) { \
+            printf("%s:%d: Failure\n", __FILE__, __LINE__); \
+            printf("Value of: %s\n", #actual); \
+            printf("  Actual: %s\n", actual_str); \
+            printf("Expected: %s\n", expected_str); \
+        } \
     }
+
 
 typedef struct test_case {
     const char* suite;
