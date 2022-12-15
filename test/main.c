@@ -13,6 +13,7 @@ typedef struct test_case {
 } test_case_t;
 
 typedef struct test_suite {
+    r2k_test_runner_t* test_runner;
     const char* name;
     size_t num_ran_tests;
     test_case_t current_test;
@@ -27,7 +28,7 @@ void print_case_result(const test_case_t* test) {
     printf("%s.%s (0 ms)\n", test->suite, test->name);
 }
 
-void start_test_case(r2k_test_runner_t* runner, test_suite_t* suite, const char* case_name) {
+void start_test_case(test_suite_t* suite, const char* case_name) {
     if (suite->num_ran_tests > 0) {
         print_case_result(&suite->current_test);
     }
@@ -38,12 +39,12 @@ void start_test_case(r2k_test_runner_t* runner, test_suite_t* suite, const char*
 
     printf_green("[ RUN      ] ");
     printf("%s.%s\n", suite->name, suite->current_test.name);
-    runner->num_tests += 1;
+    suite->test_runner->num_tests += 1;
 }
 
 void dummy_tests(r2k_test_runner_t* runner) {
-    runner->num_suites += 1;
     test_suite_t g_suite = (test_suite_t) {
+        .test_runner = runner,
         .name = __func__,
         .num_ran_tests = 0,
         .current_test = {
@@ -52,27 +53,28 @@ void dummy_tests(r2k_test_runner_t* runner) {
             .successful = false,
         },
     };
+    g_suite.test_runner->num_suites += 1;
 
     printf_green("[----------] ");
     printf("Running tests from %s\n", __func__);
 
-    start_test_case(runner, &g_suite, "integers");
+    start_test_case(&g_suite, "integers");
     EXPECT_EQ(2 + 2, 5);
 
-    start_test_case(runner, &g_suite, "chars");
+    start_test_case(&g_suite, "chars");
     EXPECT_CHAR_EQ('A', 'a');
 
-    start_test_case(runner, &g_suite, "pointers");
+    start_test_case(&g_suite, "pointers");
     int a, b;
     EXPECT_PTR_EQ(&a, &b);
 
-    start_test_case(runner, &g_suite, "strings");
+    start_test_case(&g_suite, "strings");
     EXPECT_STR_EQ("foo", "bar");
 
-    start_test_case(runner, &g_suite, "float");
+    start_test_case(&g_suite, "float");
     EXPECT_FLOAT_NEAR(1.0f, 2.0f, 0.01);
 
-    start_test_case(runner, &g_suite, "double");
+    start_test_case(&g_suite, "double");
     EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
 
     print_case_result(&g_suite.current_test);
