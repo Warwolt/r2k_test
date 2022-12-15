@@ -1,6 +1,7 @@
 ## TODO:
 
-- [x] Print start and end of test suite
+- [x] print start and end of test runner
+- [ ] print start of test suite
 - [ ] 1 suite with 1 case
 - [ ] 1 passing test
 - [ ] 1 failing test with EXPECT_EQ

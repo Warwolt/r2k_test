@@ -9,6 +9,10 @@ static void init_terminal(void) {
 #endif // WIN32
 }
 
+static const char* plural(int x) {
+    return x == 1 ? "" : "s";
+}
+
 r2k_test_runner_t r2k_test_start(void) {
     init_terminal();
 
@@ -26,15 +30,15 @@ r2k_test_runner_t r2k_test_start(void) {
 }
 
 void r2k_test_end(const r2k_test_runner_t* runner) {
-    printf("\n");
-
     printf_green("[----------] ");
     printf("Global test environment tear-down\n");
 
     printf_green("[==========] ");
-    printf("%d tests from %d test suites ran. (%d ms total)\n",
+    printf("%d test%s from %d test suite%s ran. (%d ms total)\n",
         runner->num_tests,
+        plural(runner->num_tests),
         runner->num_suites,
+        plural(runner->num_suites),
         runner->num_milliseconds
     );
 }
