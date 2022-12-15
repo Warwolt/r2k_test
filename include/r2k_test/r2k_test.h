@@ -1,7 +1,7 @@
 #ifndef R2K_TEST_H
 #define R2K_TEST_H
 
-#include "test_assert.h"
+#include "r2k_test_assert.h"
 
 #include <stddef.h>
 
