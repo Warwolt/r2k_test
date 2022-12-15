@@ -4,11 +4,23 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#define FORMAT_SPEC(x) _Generic((x), \
+      int: "%d", \
+      double: "%f", \
+      char *: "%s", \
+      default: "%x")
+
 #define EXPECT_EQ(actual, expected) \
     if (actual != expected) { \
         suite.current_test.successful = false; \
         printf("%s:%d: Failure\n", __FILE__, __LINE__); \
         printf("Value of: %s\n", #actual); \
+        printf("  Actual: "); \
+        printf(FORMAT_SPEC(actual), actual); \
+        printf("\n"); \
+        printf("Expected: "); \
+        printf(FORMAT_SPEC(expected), expected); \
+        printf("\n"); \
     }
 
 typedef struct test_case {
