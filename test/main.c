@@ -6,6 +6,19 @@
 #include <stdbool.h>
 #include <string.h>
 
+#define TEST_SUITE_START(runner) \
+    test_suite_t g_suite = (test_suite_t) { \
+        .test_runner = runner, \
+        .name = __func__, \
+        .num_ran_tests = 0, \
+        .current_test = { \
+            .suite = __func__, \
+            .name = NULL, \
+            .successful = false, \
+        }, \
+    }; \
+    g_suite.test_runner->num_suites += 1 \
+
 typedef struct test_case {
     const char* suite;
     const char* name;
@@ -43,17 +56,7 @@ void start_test_case(test_suite_t* suite, const char* case_name) {
 }
 
 void dummy_tests(r2k_test_runner_t* runner) {
-    test_suite_t g_suite = (test_suite_t) {
-        .test_runner = runner,
-        .name = __func__,
-        .num_ran_tests = 0,
-        .current_test = {
-            .suite = __func__,
-            .name = NULL,
-            .successful = false,
-        },
-    };
-    g_suite.test_runner->num_suites += 1;
+    TEST_SUITE_START(runner);
 
     printf_green("[----------] ");
     printf("Running tests from %s\n", __func__);
