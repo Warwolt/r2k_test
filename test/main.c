@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 bool expect_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len) {
     if (actual != expected) {
@@ -13,19 +14,32 @@ bool expect_int_eq(int actual, int expected, char* actual_str, char* expected_st
     return true;
 }
 
-#define EXPECT_EQ(actual, expected) \
+bool expect_ptr_eq(const void* actual, const void* expected, char* actual_str, char* expected_str, int buf_len) {
+    if (actual != expected) {
+        snprintf(actual_str, buf_len, "0x%p", actual);
+        snprintf(expected_str, buf_len, "0x%p", expected);
+        return false;
+    }
+    return true;
+}
+
+#define EXPECT_INT_OR_PTR_EQ(actual, expected, actual_str, expected_str, buf_len) _Generic((actual), \
+      int: expect_int_eq((int)(actual), (int)(expected), actual_str, expected_str, buf_len), \
+      default: expect_ptr_eq((void *)(actual), (void *)(expected), actual_str, expected_str, buf_len))
+
+// used for checking equality between integral or pointer types
+#define EXPECT_EQ(_actual, _expected) \
     { \
         char actual_str[100]; \
         char expected_str[100]; \
-        suite.current_test.successful = expect_int_eq(actual, expected, actual_str, expected_str, 100); \
+        suite.current_test.successful = EXPECT_INT_OR_PTR_EQ(_actual, _expected, actual_str, expected_str, 100); \
         if (!suite.current_test.successful) { \
             printf("%s:%d: Failure\n", __FILE__, __LINE__); \
-            printf("Value of: %s\n", #actual); \
+            printf("Value of: %s\n", #_actual); \
             printf("  Actual: %s\n", actual_str); \
             printf("Expected: %s\n", expected_str); \
         } \
     }
-
 
 typedef struct test_case {
     const char* suite;
