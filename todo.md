@@ -16,3 +16,4 @@
 - [ ] print test case duration in ms
 - [ ] print suite duration in ms
 - [ ] print total duration in ms
+- [ ] make the `r2k_test_runner_t` hidden (extern, global, some trick like that)

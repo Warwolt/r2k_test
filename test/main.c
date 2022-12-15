@@ -17,7 +17,16 @@
             .successful = false, \
         }, \
     }; \
-    g_suite.test_runner->num_suites += 1 \
+    g_suite.test_runner->num_suites += 1
+
+#define TEST_SUITE_END(runner) \
+    print_case_result(&g_suite.current_test); \
+    printf_green("[----------] "); \
+    printf("%d test%s from %s (0 ms total)\n\n", \
+        g_suite.num_ran_tests, \
+        plural_suffix(g_suite.num_ran_tests), \
+        g_suite.name \
+    )
 
 typedef struct test_case {
     const char* suite;
@@ -80,13 +89,7 @@ void dummy_tests(r2k_test_runner_t* runner) {
     start_test_case(&g_suite, "double");
     EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
 
-    print_case_result(&g_suite.current_test);
-    printf_green("[----------] ");
-    printf("%d test%s from %s (0 ms total)\n\n",
-        g_suite.num_ran_tests,
-        plural_suffix(g_suite.num_ran_tests),
-        g_suite.name
-    );
+    TEST_SUITE_END(runner);
 }
 
 int main(void) {
