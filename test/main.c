@@ -23,7 +23,9 @@
 
 
 #define TEST_SUITE_END() \
-    r2k_print_case_result(&g_suite.current_test); \
+    if (g_suite.num_ran_tests > 0) { \
+        r2k_test_case_end(&g_suite.current_test); \
+    } \
     printf_green("[----------] "); \
     printf("%d test%s from %s (0 ms total)\n\n", \
         g_suite.num_ran_tests, \

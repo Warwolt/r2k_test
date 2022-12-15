@@ -18,3 +18,4 @@
 - [ ] print total duration in ms
 - [x] make the `r2k_test_runner_t` hidden (extern, global, some trick like that)
 - [ ] go through what should be public and what should be internal
+- [ ] assert if TEST_SUITE_START not run before running TEST macro

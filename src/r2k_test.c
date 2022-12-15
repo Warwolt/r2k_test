@@ -38,20 +38,22 @@ void r2k_test_end() {
 }
 
 void r2k_test_case_start(test_suite_t* suite, const char* case_name) {
+    // finish previous test case
     if (suite->num_ran_tests > 0) {
-        r2k_print_case_result(&suite->current_test);
+        r2k_test_case_end(&suite->current_test);
     }
 
+    // start current test case
     suite->num_ran_tests += 1;
     suite->current_test.name = case_name;
     suite->current_test.successful = true;
+    suite->test_runner->num_tests += 1;
 
     printf_green("[ RUN      ] ");
     printf("%s.%s\n", suite->name, suite->current_test.name);
-    suite->test_runner->num_tests += 1;
 }
 
-void r2k_print_case_result(const test_case_t* test) {
+void r2k_test_case_end(const test_case_t* test) {
     if (test->successful) {
         printf_green("[       OK ] ");
     } else {

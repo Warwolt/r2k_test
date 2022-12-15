@@ -23,6 +23,6 @@ void r2k_test_start(void);
 void r2k_test_end();
 
 void r2k_test_case_start(test_suite_t* suite, const char* case_name);
-void r2k_print_case_result(const test_case_t* test);
+void r2k_test_case_end(const test_case_t* test);
 
 #endif // R2K_TEST_H
