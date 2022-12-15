@@ -1,6 +1,8 @@
 #ifndef R2K_TEST_H
 #define R2K_TEST_H
 
+#include "test_assert.h"
+
 #include <stddef.h>
 
 typedef struct r2k_test_runner {

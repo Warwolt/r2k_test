@@ -5,44 +5,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-bool expect_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len) {
-    if (actual != expected) {
-        snprintf(actual_str, buf_len, "%d", actual);
-        snprintf(expected_str, buf_len, "%d", expected);
-        return false;
-    }
-    return true;
-}
-
-bool expect_ptr_eq(const void* actual, const void* expected, char* actual_str, char* expected_str, int buf_len) {
-    if (actual != expected) {
-        snprintf(actual_str, buf_len, "0x%p", actual);
-        snprintf(expected_str, buf_len, "0x%p", expected);
-        return false;
-    }
-    return true;
-}
-
-#define CHECK_INT_OR_PTR_EQ(actual, expected, actual_str, expected_str, buf_len) _Generic((actual), \
-      int: expect_int_eq((int)(actual), (int)(expected), actual_str, expected_str, buf_len), \
-      default: expect_ptr_eq((void *)(actual), (void *)(expected), actual_str, expected_str, buf_len))
-
-#define RUN_EXPECT_EQ(_actual, _expected, checker_macro) \
-    { \
-        char actual_str[100]; \
-        char expected_str[100]; \
-        suite.current_test.successful = checker_macro(_actual, _expected, actual_str, expected_str, 100); \
-        if (!suite.current_test.successful) { \
-            printf("%s:%d: Failure\n", __FILE__, __LINE__); \
-            printf("Value of: %s\n", #_actual); \
-            printf("  Actual: %s\n", actual_str); \
-            printf("Expected: %s\n", expected_str); \
-        } \
-    }
-
-// used for checking equality between integral or pointer types
-#define EXPECT_EQ(_actual, _expected) RUN_EXPECT_EQ(_actual, _expected, CHECK_INT_OR_PTR_EQ)
-
 typedef struct test_case {
     const char* suite;
     const char* name;
@@ -80,7 +42,7 @@ void start_test_case(r2k_test_runner_t* runner, test_suite_t* suite, const char*
 
 void dummy_tests(r2k_test_runner_t* runner) {
     runner->num_suites += 1;
-    test_suite_t suite = (test_suite_t) {
+    test_suite_t g_suite = (test_suite_t) {
         .name = __func__,
         .num_ran_tests = 0,
         .current_test = {
@@ -93,12 +55,12 @@ void dummy_tests(r2k_test_runner_t* runner) {
     printf_green("[----------] ");
     printf("Running tests from %s\n", __func__);
 
-    start_test_case(runner, &suite, "hello");
+    start_test_case(runner, &g_suite, "hello");
     EXPECT_EQ(2 + 2, 5);
 
-    start_test_case(runner, &suite, "world");
+    start_test_case(runner, &g_suite, "world");
 
-    print_case_result(&suite.current_test);
+    print_case_result(&g_suite.current_test);
 
     printf_green("[----------] ");
     printf("1 test from %s (0 ms total)\n\n", __func__);
