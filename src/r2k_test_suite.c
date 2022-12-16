@@ -11,18 +11,18 @@ typedef enum skip_reason {
 } skip_reason_t;
 
 static skip_reason_t should_skip_test(const char* filter, const char* suite_name, const char* test_name) {
-    if (starts_with(test_name, "DISABLED_")) {
-        return SKIP_REASON_IS_DISABLED;
-    }
-
-    // check if filter empty
-    if (*filter == '\0') {
+    // only match against filter if it's non-empty
+    if (string_empty(filter)) {
+        // if not filtered, check if disabled
+        if (starts_with(test_name, "DISABLED_")) {
+            return SKIP_REASON_IS_DISABLED;
+        }
         return SKIP_REASON_NONE;
     }
 
     char full_test_name[100];
     snprintf(full_test_name, 100, "%s.%s", suite_name, test_name);
-    if (!wild_card_match(filter, full_test_name)) {
+    if (!wildcard_prefix_match(filter, full_test_name)) {
         return SKIP_REASON_IS_FILTERED;
     }
 
@@ -50,7 +50,7 @@ r2k_test_suite_t r2k_test_suite_start(const char* suite_name) {
 }
 
 void r2k_test_suite_end(r2k_test_suite_t* suite) {
-    if (suite->num_ran_tests > 0) {
+    if (suite->num_ran_tests > 0 && !suite->current_test.skipped) {
         r2k_test_case_end(suite);
     }
     printf_green("[----------] ");
@@ -65,7 +65,7 @@ void r2k_test_suite_end(r2k_test_suite_t* suite) {
 bool r2k_should_skip_suite(const char* suite_name) {
     // if filter doesn't match suite name, it won't match the full test name either
     r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
-    return !(string_empty(test_runner->test_filter) || wild_card_match(suite_name, test_runner->test_filter));
+    return !(string_empty(test_runner->test_filter) || wildcard_prefix_match(test_runner->test_filter, suite_name));
 }
 
 bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {

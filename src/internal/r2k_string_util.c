@@ -5,16 +5,18 @@ bool starts_with(const char* restrict string, const char* restrict prefix) {
 }
 
 // returns true if either lhs == rhs or matches up until asterix
-bool wild_card_match(const char* lhs, const char* rhs) {
-    while (*lhs && *rhs) {
-        if (*lhs == '*') {
+// FIXME: this should fail if prefix is longer than string
+bool wildcard_prefix_match(const char* prefix, const char* string) {
+    while (*prefix && *string) {
+        if (*prefix == '*') {
             return true; // prefix matches
         }
-        if (*lhs != *rhs) {
+        if (*prefix != *string) {
             return false; // not matching
         }
-        lhs++;
-        rhs++;
+        prefix++;
+        string++;
     }
+
     return true;
 }
