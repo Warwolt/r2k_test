@@ -77,7 +77,7 @@ By passing a `--test_filter=<pattern>` argument to the test runner program, only
 
 Here's an example of running the test program with the `--test_filter=arithmetic_tests.addition*` argument:
 
-(image)
+![arithmetic_tests_filtered_example](docs/arithmetic_tests_filtered.png)
 
 ## Build instructions
 (todo)
