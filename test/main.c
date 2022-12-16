@@ -37,24 +37,10 @@ void dummy_tests(void) {
     TEST_SUITE_END();
 }
 
-int main(int argc, char **argv) {
-    if (argc > 0) {
-        char filter_prefix[100] = { 0 };
-        if (starts_with(argv[1], "--test_filter=")) {
-            size_t prefix_len = strlen("--test_filter=");
-            const char* arg_value = argv[1] + prefix_len;
-            if (arg_value != '\0') {
-                strncpy(filter_prefix, arg_value, 100);
-            }
-            printf("%s\n", filter_prefix);
-        }
-    }
+int main(int argc, char** argv) {
+    r2k_test_start(argc, argv);
 
-    if (0) {
-        r2k_test_start();
+    // dummy_tests();
 
-        dummy_tests();
-
-        return r2k_test_end();
-    }
+    return r2k_test_end();
 }

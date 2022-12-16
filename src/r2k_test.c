@@ -3,6 +3,7 @@
 #include "r2k_test/internal/windows.h"
 #include "r2k_test/internal/r2k_color_print.h"
 #include "r2k_test/internal/r2k_print_util.h"
+#include "r2k_test/internal/r2k_string_util.h"
 
 static void init_terminal(void) {
 #ifdef WIN32
@@ -10,8 +11,20 @@ static void init_terminal(void) {
 #endif // WIN32
 }
 
-void r2k_test_start(void) {
+static void parse_args(int argc, char** argv) {
+    if (argc > 0) {
+        const char* test_filter_prefix = "--test_filter=";
+        if (starts_with(argv[1], test_filter_prefix)) {
+            const char* arg_value = argv[1] + strlen(test_filter_prefix);
+            r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
+            strncpy(test_runner->test_filter, arg_value, 100);
+        }
+    }
+}
+
+void r2k_test_start(int argc, char** argv) {
     init_terminal();
+    parse_args(argc, argv);
 
     printf_green("[==========] ");
     printf("Running tests.\n");

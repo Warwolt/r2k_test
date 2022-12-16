@@ -13,7 +13,7 @@ typedef enum r2k_test_result {
     R2K_TEST_FAILED = 1,
 } r2k_test_result_t;
 
-void r2k_test_start(void);
+void r2k_test_start(int argc, char** argv);
 r2k_test_result_t r2k_test_end();
 
 #endif // R2K_TEST_H
