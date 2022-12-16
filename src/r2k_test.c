@@ -38,11 +38,14 @@ r2k_test_result_t r2k_test_end() {
     printf_green("[  PASSED  ] ");
     printf("%d test%s.\n", test_runner->num_passed, plural_suffix(test_runner->num_passed));
 
-    const size_t num_failed = test_runner->num_failed;
-    if (num_failed > 0) {
+    const size_t num_failed_tests = test_runner->num_failed_tests;
+    if (num_failed_tests > 0) {
         printf_red("[  FAILED  ] ");
-        printf("%d test%s, listed below:\n", num_failed, plural_suffix(num_failed));
-        printf("TODO add names of failed tests\n");
+        printf("%d test%s, listed below:\n", num_failed_tests, plural_suffix(num_failed_tests));
+        for (size_t i = 0; i < num_failed_tests; i++) {
+            printf_red("[  FAILED  ] ");
+            printf("%s\n", test_runner->failed_test_names[i]);
+        }
         return R2K_TEST_FAILED;
     }
 

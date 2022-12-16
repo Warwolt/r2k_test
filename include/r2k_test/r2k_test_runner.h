@@ -10,8 +10,8 @@ typedef struct r2k_test_runner {
     size_t num_tests;
     size_t num_suites;
     size_t num_passed;
-    size_t num_failed;
-    const char failed_test_names[R2K_MAX_NUM_FAILED_TEST_STR][R2K_MAX_FAILED_TEST_STR_LEN];
+    size_t num_failed_tests;
+    char failed_test_names[R2K_MAX_NUM_FAILED_TEST_STR][R2K_MAX_FAILED_TEST_STR_LEN];
     size_t total_milliseconds;
 } r2k_test_runner_t;
 
