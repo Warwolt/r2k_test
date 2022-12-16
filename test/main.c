@@ -40,7 +40,7 @@ void dummy_tests(void) {
 int main(int argc, char** argv) {
     r2k_test_start(argc, argv);
 
-    // dummy_tests();
+    dummy_tests();
 
     return r2k_test_end();
 }

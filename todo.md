@@ -13,7 +13,7 @@
 
 ### Test filtering
 - [ ] filter test based on prefix
-  - [ ] exact match
+  - [x] exact match
   - [ ] wildcard
   - [x] print out that filter is active
 - [ ] don't run tests prefixex by `DISABLED_`

@@ -3,6 +3,15 @@
 #include "r2k_test/internal/r2k_color_print.h"
 #include "r2k_test/internal/r2k_print_util.h"
 
+#include <string.h>
+
+static bool should_skip_test(const char* filter, const char* full_test_name) {
+    if (*filter == '\0') {
+        return false;
+    }
+
+    return strcmp(filter, full_test_name) != 0;
+}
 
 r2k_test_suite_t r2k_test_suite_start(const char* suite_name) {
     r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
@@ -15,9 +24,10 @@ r2k_test_suite_t r2k_test_suite_start(const char* suite_name) {
         .test_runner = test_runner,
         .name = suite_name,
         .num_ran_tests = 0,
-        .current_test = {
+        .current_test = (r2k_test_case_t) {
             .name = NULL,
             .successful = false,
+            .skipped = false,
         },
     };
 }
@@ -34,20 +44,31 @@ void r2k_test_suite_end(r2k_test_suite_t* suite) {
     );
 }
 
-void r2k_test_case_start(r2k_test_suite_t* suite, const char* case_name) {
-    // finish previous test case
-    if (suite->num_ran_tests > 0) {
+bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
+    // finish previous test if it wasn't skipped
+    if (suite->num_ran_tests > 0 && !suite->current_test.skipped) {
         r2k_test_case_end(suite);
     }
-
-    // start current test case
-    suite->num_ran_tests += 1;
-    suite->current_test.name = case_name;
     suite->current_test.successful = true;
+    suite->current_test.skipped = false;
+    suite->current_test.name = test_name;
+
+    // check if should skip current test
+    char full_test_name[100];
+    snprintf(full_test_name, 100, "%s.%s", suite->name, test_name);
+    if (should_skip_test(suite->test_runner->test_filter, full_test_name)) {
+        suite->current_test.skipped = true;
+        return false;
+    }
+
+    // start current test
+    suite->num_ran_tests += 1;
     suite->test_runner->num_tests += 1;
 
     printf_green("[ RUN      ] ");
     printf("%s.%s\n", suite->name, suite->current_test.name);
+
+    return true;
 }
 
 void r2k_test_case_end(r2k_test_suite_t* suite) {
@@ -64,3 +85,4 @@ void r2k_test_case_end(r2k_test_suite_t* suite) {
     }
     printf("%s.%s (0 ms)\n", suite->name, suite->current_test.name);
 }
+
