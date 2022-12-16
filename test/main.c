@@ -75,6 +75,5 @@ int main(void) {
 
     dummy_tests();
 
-    r2k_test_end();
-    return 0;
+    return r2k_test_end();
 }

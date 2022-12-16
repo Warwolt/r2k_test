@@ -21,7 +21,7 @@ void r2k_test_start(void) {
     _r2k_internal_init_test_runner();
 }
 
-void r2k_test_end() {
+r2k_test_result_t r2k_test_end() {
     const r2k_test_runner_t* test_runner = _r2k_internal_get_test_runner();
 
     printf_green("[----------] ");
@@ -44,7 +44,10 @@ void r2k_test_end() {
         printf_red("[  FAILED  ] ");
         printf("%d test%s, listed below:\n", num_failed, plural_suffix(num_failed));
         printf("TODO add names of failed tests\n");
+        return R2K_TEST_FAILED;
     }
+
+    return R2K_TEST_OK;
 }
 
 void r2k_test_case_start(test_suite_t* suite, const char* case_name) {
