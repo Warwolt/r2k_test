@@ -8,8 +8,10 @@
 - [x] EXPECT_NEAR for `float` and `double`
 - [x] EXPECT_CHAR_EQ for `char`
 - [x] EXPECT_STR_EQ for `const char*`
-- [ ] let EXPECT_EQ take an optional error message string
-- [ ] EXPECT_ASSERT for checking `assert` calls (early termination)
+- [ ] let EXPECT_EQ take an optional error message formatting string (fmt, ...)
+- [ ] EXPECT_EXIT for early termination
+- [ ] ASSERT_* macros corresponding to each EXPECT_*
+  - [ ] asserting should immediately fail and continue to next test case
 
 ### Test filtering
 - [x] filter test based on prefix
