@@ -11,13 +11,13 @@ typedef enum skip_reason {
 } skip_reason_t;
 
 static skip_reason_t should_skip_test(const char* filter, const char* suite_name, const char* test_name) {
+    if (starts_with(test_name, "DISABLED_")) {
+        return SKIP_REASON_IS_DISABLED;
+    }
+
     // check if filter empty
     if (*filter == '\0') {
         return SKIP_REASON_NONE;
-    }
-
-    if (starts_with(test_name, "DISABLED_")) {
-        return SKIP_REASON_IS_DISABLED;
     }
 
     char full_test_name[100];

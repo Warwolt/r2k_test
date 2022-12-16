@@ -2,7 +2,14 @@
 
 A small test library for C programs, written to closely mimick [Google Test](https://github.com/google/googletest). This is intended as a library that is lightweight and easy to integrate into a C project to add testing capabilities.
 
-Tests in R2K Test are defined with a `TEST()` macro, and the tests are defined inside of a function that becomes the test suite for the tests. These test suites are then ran by calling the corresponding functions from a test runner program.
+Some tweaks are made to the assertion macros in comparison to Google Test due to the type system of C; `EXPECT_EQ` only checks integral types, and other primitive types have their own corresponding macros like `EXPECT_CHAR_EQ`, `EXPECT_PTR_EQ`, and `EXPECT_STR_EQ()`.
+
+## Whirlwind tour
+
+Tests in R2K Test are defined with a `TEST()` macro, and the tests are defined inside of a function that becomes the test suite for the tests. These test suites are then ran by calling the corresponding functions from a test runner program. The test runner program should start with a call to `r2k_test_start()` and end with a call to `r2k_test_end` (that will return a `0` if all tests passed, and `1` if any test failed).
+
+### Defining a test suite
+Here's an example test runner program with a test suite `arithmetic_tests`:
 
 ```C
 #include <r2k_test/r2k_test.h>
@@ -35,6 +42,42 @@ Running this on the command line gives an output that is very familiar to someon
 ![arithmetic_tests_example](docs/arithmetic_tests.png)
 
 Note that the function `void arithmetic_tests()` becomes the test suite name, as seen in e.g. the `arithmetic_tests.addition_is_commutative` output.
+
+### Asserting in tests
+
+We can tweak one of the tests so that it contains an error:
+
+```C++
+TEST(zero_is_additive_identity) {
+    EXPECT_EQ(2 + 1, 2);
+}
+```
+
+Running this prints out an error message with details like in Google Test:
+
+![arithmetic_tests_failed_example](docs/arithmetic_tests_failed.png)
+
+### Disabling tests
+
+Like in Google Test, a test case can be disabled by prefixing its name with `DISABLED_`:
+
+```C++
+TEST(DISABLED_addition_is_commutative) {
+    EXPECT_EQ(2 + 3, 3 + 2);
+}
+```
+
+This will behave in the same way as in Google Test when running the tests, where that case is now omitted, and a reminder text is printed at the end of the output that there are disabled tests:
+
+![arithmetic_tests_disabled_example](docs/arithmetic_tests_disabled.png)
+
+### Filtering tests
+
+By passing a `--test_filter=<pattern>` argument to the test runner program, only the test cases that fit the pattern will be ran. The pattern is a string that will be matched against the full name of the test case, where the full name is e.g. `arithmetic_tests.addition_is_commutative`. The pattern can contain a `*` wildcard, that makes the filter only prefix match.
+
+Here's an example of running the test program with the `--test_filter=arithmetic_tests.addition*` argument:
+
+(image)
 
 ## Build instructions
 (todo)

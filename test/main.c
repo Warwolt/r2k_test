@@ -8,7 +8,7 @@ void arithmetic_tests() {
     }
 
     TEST(zero_is_additive_identity) {
-        EXPECT_EQ(2 + 0, 2);
+        EXPECT_EQ(2 + 1, 2);
     }
 
     TEST_SUITE_END();
