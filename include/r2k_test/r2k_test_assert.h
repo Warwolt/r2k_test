@@ -15,6 +15,17 @@ bool r2k_check_str_eq(const char* actual, const char* expected, char* actual_str
 bool r2k_check_float_near(float actual, float expected, float abs_error, char* diff_str, char* actual_str, char* expected_str, int buf_len);
 bool r2k_check_double_near(double actual, double expected, float abs_error, char* diff_str, char* actual_str, char* expected_str, int buf_len);
 
+#define RUN_EXPECT_BOOL(actual, bool_val) \
+    { \
+        bool actual_val = actual; \
+        _R2K_TEST_SUITE.current_test.successful = (actual_val == bool_val); \
+        if (!_R2K_TEST_SUITE.current_test.successful) { \
+            printf(" error: Value of: %s\n", #actual); \
+            printf("  Actual: %s\n", actual_val ? "true" : "false"); \
+            printf("Expected: %s\n", bool_val ? "true" : "false"); \
+        } \
+    }
+
 #define RUN_EXPECT_EQ(_actual, _expected, value_checker) \
     { \
         char actual_str[100]; \
@@ -49,6 +60,9 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
             printf("%s evaluates to %f\n", #abs_error, abs_error); \
         } \
     }
+
+#define EXPECT_TRUE(actual) RUN_EXPECT_BOOL(actual, true)
+#define EXPECT_FALSE(actual) RUN_EXPECT_BOOL(actual, false)
 
 #define EXPECT_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_int_eq)
 #define EXPECT_CHAR_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_char_eq)

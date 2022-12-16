@@ -34,6 +34,11 @@ void dummy_tests(void) {
         EXPECT_DOUBLE_NEAR(1.0, 2.01, 0.01);
     }
 
+    TEST(expect_true) {
+        bool five_is_even = 5 % 2 == 0;
+        EXPECT_TRUE(five_is_even);
+    }
+
     TEST_SUITE_END();
 }
 

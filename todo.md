@@ -33,5 +33,9 @@
 
 ### Code base health
 - [ ] go through what should be public and what should be internal
-- [ ] assert if TEST_SUITE_START not run before running TEST macro
+- [ ] assert that macros and functions called in right order
+  - [ ] assert r2k_test_start ran before TEST_SUITE_START
+  - [ ] assert TEST_SUITE_START ran before TEST
+  - [ ] assert TEST_SUITE_START ran before TEST_SUITE_END
+  - [ ] assert TEST_SUITE_END ran before 2nd TEST_SUITE_START
 - [ ] use a CMake for building
