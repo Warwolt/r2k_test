@@ -5,12 +5,28 @@
 
 #include <string.h>
 
+// returns true if either lhs == rhs or matches up until asterix
+bool wild_card_match(const char* lhs, const char* rhs) {
+    while (*lhs && *rhs) {
+        if (*lhs == '*') {
+            return true; // prefix matches
+        }
+        if (*lhs != *rhs) {
+            return false; // not matching
+        }
+        lhs++;
+        rhs++;
+    }
+    return true;
+}
+
 static bool should_skip_test(const char* filter, const char* full_test_name) {
+    // check if filter empty
     if (*filter == '\0') {
         return false;
     }
 
-    return strcmp(filter, full_test_name) != 0;
+    return !wild_card_match(filter, full_test_name);
 }
 
 r2k_test_suite_t r2k_test_suite_start(const char* suite_name) {

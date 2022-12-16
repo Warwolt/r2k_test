@@ -12,9 +12,9 @@
 - [ ] EXPECT_ASSERT for checking `assert` calls (early termination)
 
 ### Test filtering
-- [ ] filter test based on prefix
+- [x] filter test based on prefix
   - [x] exact match
-  - [ ] wildcard
+  - [x] wildcard
   - [x] print out that filter is active
 - [ ] don't run tests prefixex by `DISABLED_`
   - [ ] print out num disabled tests
