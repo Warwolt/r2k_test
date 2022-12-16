@@ -18,8 +18,8 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
 #define RUN_EXPECT_BOOL(actual, bool_val) \
     { \
         bool actual_val = actual; \
-        _R2K_TEST_SUITE.current_test.successful = (actual_val == bool_val); \
-        if (!_R2K_TEST_SUITE.current_test.successful) { \
+        R2K_TEST_SUITE.current_test.successful = (actual_val == bool_val); \
+        if (!R2K_TEST_SUITE.current_test.successful) { \
             printf(" error: Value of: %s\n", #actual); \
             printf("  Actual: %s\n", actual_val ? "true" : "false"); \
             printf("Expected: %s\n", bool_val ? "true" : "false"); \
@@ -30,8 +30,8 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
     { \
         char actual_str[100]; \
         char expected_str[100]; \
-        _R2K_TEST_SUITE.current_test.successful = value_checker(_actual, _expected, actual_str, expected_str, 100); \
-        if (!_R2K_TEST_SUITE.current_test.successful) { \
+        R2K_TEST_SUITE.current_test.successful = value_checker(_actual, _expected, actual_str, expected_str, 100); \
+        if (!R2K_TEST_SUITE.current_test.successful) { \
             printf("%s(%d): error: Expected equality of these values:\n", __FILE__, __LINE__); \
             printf("  %s\n", #_actual); \
             printf("    Which is: %s\n", actual_str); \
@@ -44,8 +44,8 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
         char diff_str[100]; \
         char actual_str[100]; \
         char expected_str[100]; \
-        _R2K_TEST_SUITE.current_test.successful = value_checker(_actual, _expected, abs_error, diff_str, actual_str, expected_str, 100); \
-        if (!_R2K_TEST_SUITE.current_test.successful) { \
+        R2K_TEST_SUITE.current_test.successful = value_checker(_actual, _expected, abs_error, diff_str, actual_str, expected_str, 100); \
+        if (!R2K_TEST_SUITE.current_test.successful) { \
             printf("%s:%d: Failure\n", __FILE__, __LINE__); \
             printf("%s(%d): error: The difference between %s and %s is %s, which exceeds %s, where\n", \
                 __FILE__, \
