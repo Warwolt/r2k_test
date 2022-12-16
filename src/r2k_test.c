@@ -39,6 +39,7 @@ void r2k_test_start(int argc, char** argv) {
 }
 
 r2k_test_result_t r2k_test_end() {
+    r2k_test_result_t result = R2K_TEST_OK;
     const r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
 
     printf_green("[----------] ");
@@ -54,7 +55,7 @@ r2k_test_result_t r2k_test_end() {
     );
 
     printf_green("[  PASSED  ] ");
-    printf("%d test%s.\n", test_runner->num_passed, plural_suffix(test_runner->num_passed));
+    printf("%d test%s.\n", test_runner->num_passed_tests, plural_suffix(test_runner->num_passed_tests));
 
     const size_t num_failed_tests = test_runner->num_failed_tests;
     if (num_failed_tests > 0) {
@@ -64,9 +65,26 @@ r2k_test_result_t r2k_test_end() {
             printf_red("[  FAILED  ] ");
             printf("%s\n", test_runner->failed_test_names[i]);
         }
-
-        return R2K_TEST_FAILED;
     }
 
-    return R2K_TEST_OK;
+    printf("\n");
+
+    if (num_failed_tests > 0) {
+        printf(" %d FAILED TEST\n%s",
+            num_failed_tests,
+            uppercase_plural_suffix(num_failed_tests)
+        );
+
+        result = R2K_TEST_FAILED;
+    }
+
+    const size_t num_disabled_tests = test_runner->num_disabled_tests;
+    if (num_disabled_tests > 0) {
+        printf_yellow("  YOU HAVE %d DISABLED TEST%s\n\n",
+            num_disabled_tests,
+            uppercase_plural_suffix(num_disabled_tests)
+        );
+    }
+
+    return result;
 }

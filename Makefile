@@ -22,7 +22,7 @@ $(OUT_DIR)/$(TARGET): $(OBJ)
 
 $(OUT_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	gcc -c $< -MMD -MP --std=c99 -Iinclude -Wall -Werror -o $@
+	gcc -c $< -MMD -MP --std=c99 -Iinclude -Wall -Werror -Wswitch -o $@
 
 clean:
 	@rm -rf $(OUT_DIR)

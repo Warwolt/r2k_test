@@ -45,7 +45,11 @@ void dummy_tests(void) {
 void other_tests(void) {
     TEST_SUITE_START();
 
-    TEST(strcmp_equal_strings) {
+    TEST(DISABLED_strcmp_equal_strings) {
+        EXPECT_TRUE(strcmp("aaa", "aaa") == 0);
+    }
+
+    TEST(DISABLED_strcmp_unequal_strings) {
         EXPECT_TRUE(strcmp("aaa", "bbb") == 0);
     }
 

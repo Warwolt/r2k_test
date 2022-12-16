@@ -4,13 +4,29 @@
 #include "r2k_test/internal/r2k_print_util.h"
 #include "r2k_test/internal/r2k_string_util.h"
 
-static bool should_skip_test(const char* filter, const char* full_test_name) {
+typedef enum skip_reason {
+    SKIP_REASON_IS_FILTERED,
+    SKIP_REASON_IS_DISABLED,
+    SKIP_REASON_NONE,
+} skip_reason_t;
+
+static skip_reason_t should_skip_test(const char* filter, const char* suite_name, const char* test_name) {
     // check if filter empty
     if (*filter == '\0') {
-        return false;
+        return SKIP_REASON_NONE;
     }
 
-    return !wild_card_match(filter, full_test_name);
+    if (starts_with(test_name, "DISABLED_")) {
+        return SKIP_REASON_IS_DISABLED;
+    }
+
+    char full_test_name[100];
+    snprintf(full_test_name, 100, "%s.%s", suite_name, test_name);
+    if (!wild_card_match(filter, full_test_name)) {
+        return SKIP_REASON_IS_FILTERED;
+    }
+
+    return SKIP_REASON_NONE;
 }
 
 r2k_test_suite_t r2k_test_suite_start(const char* suite_name) {
@@ -56,17 +72,19 @@ bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
     suite->current_test.skipped = false;
 
     // check if should skip current test
-    char full_test_name[100];
-    snprintf(full_test_name, 100, "%s.%s", suite->name, test_name);
-    if (should_skip_test(suite->test_runner->test_filter, full_test_name)) {
-        suite->current_test.skipped = true;
-        return false;
+    switch (should_skip_test(suite->test_runner->test_filter, suite->name, test_name)) {
+        case SKIP_REASON_IS_DISABLED:
+            suite->test_runner->num_disabled_tests += 1;
+        case SKIP_REASON_IS_FILTERED:
+            suite->current_test.skipped = true;
+            return false;
+        case SKIP_REASON_NONE:
+            break;
     }
 
     // start current test
     suite->num_ran_tests += 1;
     suite->test_runner->num_tests += 1;
-
     printf_green("[ RUN      ] ");
     printf("%s.%s\n", suite->name, suite->current_test.name);
 
@@ -75,7 +93,7 @@ bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
 
 void r2k_test_case_end(r2k_test_suite_t* suite) {
     if (suite->current_test.successful) {
-        suite->test_runner->num_passed += 1;
+        suite->test_runner->num_passed_tests += 1;
         printf_green("[       OK ] ");
     } else {
         // add test name to list of failed tests
