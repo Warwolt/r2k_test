@@ -60,6 +60,12 @@ void r2k_test_suite_end(r2k_test_suite_t* suite) {
     );
 }
 
+bool r2k_should_skip_suite(const char* suite_name) {
+    // if filter doesn't match suite name, it won't match the full test name either
+    r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
+    return !(string_empty(test_runner->test_filter) || wild_card_match(suite_name, test_runner->test_filter));
+}
+
 bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
     // finish previous test if it wasn't skipped
     if (suite->num_ran_tests > 0 && !suite->current_test.skipped) {

@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#define string_empty(str) (str && *str == '\0')
+
 bool starts_with(const char* restrict string, const char* restrict prefix);
 bool wild_card_match(const char* lhs, const char* rhs);
 
