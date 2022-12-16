@@ -20,10 +20,10 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
         char expected_str[100]; \
         _R2K_TEST_SUITE.current_test.successful = value_checker(_actual, _expected, actual_str, expected_str, 100); \
         if (!_R2K_TEST_SUITE.current_test.successful) { \
-            printf("%s:%d: Failure\n", __FILE__, __LINE__); \
-            printf("Value of: %s\n", #_actual); \
-            printf("  Actual: %s\n", actual_str); \
-            printf("Expected: %s\n", expected_str); \
+            printf("%s(%d): error: Expected equality of these values:\n", __FILE__, __LINE__); \
+            printf("  %s\n", #_actual); \
+            printf("    Which is: %s\n", actual_str); \
+            printf("  %s\n", expected_str); \
         } \
     }
 
