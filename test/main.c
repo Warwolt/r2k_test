@@ -1,5 +1,7 @@
 #include "r2k_test/r2k_test.h"
 
+#include "r2k_test/internal/r2k_string_util.h"
+
 void dummy_tests(void) {
     TEST_SUITE_START();
 
@@ -35,10 +37,24 @@ void dummy_tests(void) {
     TEST_SUITE_END();
 }
 
-int main(void) {
-    r2k_test_start();
+int main(int argc, char **argv) {
+    if (argc > 0) {
+        char filter_prefix[100] = { 0 };
+        if (starts_with(argv[1], "--test_filter=")) {
+            size_t prefix_len = strlen("--test_filter=");
+            const char* arg_value = argv[1] + prefix_len;
+            if (arg_value != '\0') {
+                strncpy(filter_prefix, arg_value, 100);
+            }
+            printf("%s\n", filter_prefix);
+        }
+    }
 
-    dummy_tests();
+    if (0) {
+        r2k_test_start();
 
-    return r2k_test_end();
+        dummy_tests();
+
+        return r2k_test_end();
+    }
 }

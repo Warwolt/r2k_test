@@ -13,6 +13,8 @@
 
 ### Test filtering
 - [ ] filter test based on prefix
+  - [ ] exact match
+  - [ ] wildcard
 - [ ] don't run tests prefixex by `DISABLED_`
 
 ### Test reporting
