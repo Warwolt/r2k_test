@@ -6,7 +6,9 @@ Some tweaks are made to the assertion macros in comparison to Google Test due to
 
 ## Whirlwind tour
 
-Tests in R2K Test are defined with a `TEST()` macro, and the tests are defined inside of a function that becomes the test suite for the tests. These test suites are then ran by calling the corresponding functions from a test runner program. The test runner program should start with a call to `r2k_test_start()` and end with a call to `r2k_test_end` (that will return a `0` if all tests passed, and `1` if any test failed).
+Tests in R2K Test are defined with a `TEST()` macro, and the tests are defined inside of a function that becomes the test suite for the tests.These test suites are then ran by calling the corresponding functions from a test runner program.
+
+The test runner program should start with a call to `r2k_test_start()` and end with a call to `r2k_test_end` (that will return a `0` if all tests passed, and `1` if any test failed).
 
 ### Defining a test suite
 Here's an example test runner program with a test suite `arithmetic_tests`:
