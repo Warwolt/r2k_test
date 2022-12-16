@@ -15,7 +15,7 @@
 - [ ] filter test based on prefix
   - [ ] exact match
   - [ ] wildcard
-  - [ ] print out that filter is active
+  - [x] print out that filter is active
 - [ ] don't run tests prefixex by `DISABLED_`
   - [ ] print out num disabled tests
 

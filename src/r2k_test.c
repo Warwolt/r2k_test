@@ -18,6 +18,7 @@ static void parse_args(int argc, char** argv) {
             const char* arg_value = argv[1] + strlen(test_filter_prefix);
             r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
             strncpy(test_runner->test_filter, arg_value, 100);
+            printf_yellow("Note: Test filter = %s\n", test_runner->test_filter);
         }
     }
 }
