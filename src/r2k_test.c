@@ -46,6 +46,7 @@ r2k_test_result_t r2k_test_end() {
             printf_red("[  FAILED  ] ");
             printf("%s\n", test_runner->failed_test_names[i]);
         }
+
         return R2K_TEST_FAILED;
     }
 
