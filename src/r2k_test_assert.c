@@ -42,8 +42,10 @@ bool r2k_check_str_eq(const char* actual, const char* expected, char* actual_str
     return true;
 }
 
-bool r2k_check_float_near(float actual, float expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
-    if (abs(actual - expected) > abs_error) {
+bool r2k_check_float_near(float actual, float expected, float abs_error, char* diff_str, char* actual_str, char* expected_str, int buf_len) {
+    float diff = abs(actual - expected);
+    if (diff > abs_error) {
+        snprintf(diff_str, buf_len, "%f", diff);
         snprintf(actual_str, buf_len, "%f", actual);
         snprintf(expected_str, buf_len, "%f", expected);
         return false;
@@ -51,8 +53,10 @@ bool r2k_check_float_near(float actual, float expected, float abs_error, char* a
     return true;
 }
 
-bool r2k_check_double_near(double actual, double expected, float abs_error, char* actual_str, char* expected_str, int buf_len) {
-    if (abs(actual - expected) > abs_error) {
+bool r2k_check_double_near(double actual, double expected, float abs_error, char* diff_str, char* actual_str, char* expected_str, int buf_len) {
+    double diff = abs(actual - expected);
+    if (diff > abs_error) {
+        snprintf(diff_str, buf_len, "%f", diff);
         snprintf(actual_str, buf_len, "%f", actual);
         snprintf(expected_str, buf_len, "%f", expected);
         return false;
