@@ -55,6 +55,7 @@ void r2k_test_case_end(r2k_test_suite_t* suite) {
         printf_green("[       OK ] ");
     } else {
         suite->test_runner->num_failed += 1;
+        // add suite and test name to failed tests list
         printf_red("[  FAILED  ] ");
     }
     printf("%s.%s (0 ms)\n", suite->name, suite->current_test.name);

@@ -1,6 +1,6 @@
 #include "r2k_test/r2k_test.h"
 
-void dummy_tests() {
+void dummy_tests(void) {
     TEST_SUITE_START();
 
     TEST(expect_integers_ok) {

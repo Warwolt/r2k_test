@@ -19,7 +19,7 @@
 - [x] print start and end of test runner
 - [x] print start of test suite
 - [x] print num passed tests at end of run
-- [ ] print num failed tests at end of run
+- [x] print num failed tests at end of run
 - [ ] print name of failed tests
 
 ### Test timing
