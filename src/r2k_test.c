@@ -38,6 +38,13 @@ void r2k_test_end() {
 
     printf_green("[  PASSED  ] ");
     printf("%d test%s.\n", test_runner->num_passed, plural_suffix(test_runner->num_passed));
+
+    const size_t num_failed = test_runner->num_failed;
+    if (num_failed > 0) {
+        printf_red("[  FAILED  ] ");
+        printf("%d test%s, listed below:\n", num_failed, plural_suffix(num_failed));
+        printf("TODO add names of failed tests\n");
+    }
 }
 
 void r2k_test_case_start(test_suite_t* suite, const char* case_name) {

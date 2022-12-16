@@ -35,7 +35,7 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
             printf("Value of: %s\n", #_actual); \
             printf("  Actual: %s\n", actual_str); \
             printf("Expected: %s\n", expected_str); \
-            printf("note: tolerance is %d\n", abs_error); \
+            printf("note: tolerance is %f\n", abs_error); \
         } \
     }
 

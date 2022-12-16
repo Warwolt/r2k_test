@@ -42,7 +42,7 @@ void dummy_tests() {
         EXPECT_EQ(2 + 2, 4);
     }
 
-    TEST(expect_integers) {
+    TEST(expect_integers_fail) {
         EXPECT_EQ(2 + 2, 5);
     }
 
