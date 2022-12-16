@@ -2,23 +2,7 @@
 
 #include "r2k_test/internal/r2k_color_print.h"
 #include "r2k_test/internal/r2k_print_util.h"
-
-#include <string.h>
-
-// returns true if either lhs == rhs or matches up until asterix
-bool wild_card_match(const char* lhs, const char* rhs) {
-    while (*lhs && *rhs) {
-        if (*lhs == '*') {
-            return true; // prefix matches
-        }
-        if (*lhs != *rhs) {
-            return false; // not matching
-        }
-        lhs++;
-        rhs++;
-    }
-    return true;
-}
+#include "r2k_test/internal/r2k_string_util.h"
 
 static bool should_skip_test(const char* filter, const char* full_test_name) {
     // check if filter empty
@@ -65,9 +49,11 @@ bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
     if (suite->num_ran_tests > 0 && !suite->current_test.skipped) {
         r2k_test_case_end(suite);
     }
+
+    // reset test case metadata
+    suite->current_test.name = test_name;
     suite->current_test.successful = true;
     suite->current_test.skipped = false;
-    suite->current_test.name = test_name;
 
     // check if should skip current test
     char full_test_name[100];
