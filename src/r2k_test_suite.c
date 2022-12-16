@@ -82,7 +82,11 @@ bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
     // check if should skip current test
     switch (should_skip_test(suite->test_runner->test_filter, suite->name, test_name)) {
         case SKIP_REASON_IS_DISABLED:
+            printf_yellow("[ DISABLED ] ");
+            printf("%s.%s\n", suite->name, suite->current_test.name);
             suite->test_runner->num_disabled_tests += 1;
+            suite->current_test.skipped = true;
+            return false;
         case SKIP_REASON_IS_FILTERED:
             suite->current_test.skipped = true;
             return false;
