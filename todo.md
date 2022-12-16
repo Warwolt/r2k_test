@@ -2,10 +2,11 @@
 
 ### Assertions
 - [x] print args to EXPECT_EQ on failure
-  - ~~[x] additionally print integer in ASCII range as char~~
+  - [x] ~~additionally print integer in ASCII range as char~~
   - [x] write to buffer and make single printf call
   - [x] evaluate `actual` and `expected` only once in assertion
 - [x] EXPECT_NEAR for `float` and `double`
+- [x] EXPECT_CHAR_EQ for `char`
 - [x] EXPECT_STR_EQ for `const char*`
 - [ ] let EXPECT_EQ take optional error message string
 

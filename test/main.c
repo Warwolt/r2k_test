@@ -8,7 +8,7 @@
 
 // TODO move most of this into a function in a `r2k_test_suite.h` file
 #define TEST_SUITE_START() \
-    test_suite_t g_suite = (test_suite_t) { \
+    r2k_test_suite_t g_suite = (r2k_test_suite_t) { \
         .test_runner = _r2k_internal_get_test_runner(), \
         .name = __func__, \
         .num_ran_tests = 0, \
