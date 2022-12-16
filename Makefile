@@ -3,10 +3,11 @@
 OUT_DIR = build
 
 SRC = \
-	test/main.c \
-	src/r2k_test.c \
 	src/r2k_test_assert.c \
+	src/r2k_test_case.c \
 	src/r2k_test_runner.c \
+	src/r2k_test.c \
+	test/main.c \
 
 OBJ = $(patsubst %.c,$(OUT_DIR)/%.o,$(SRC))
 DEBS = $(patsubst %.c,$(OUT_DIR)/%.d,$(SRC))

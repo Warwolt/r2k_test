@@ -27,3 +27,4 @@
 ### Code base health
 - [ ] go through what should be public and what should be internal
 - [ ] assert if TEST_SUITE_START not run before running TEST macro
+- [ ] use a CMake for building
