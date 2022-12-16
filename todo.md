@@ -8,16 +8,19 @@
 - [x] EXPECT_NEAR for `float` and `double`
 - [x] EXPECT_CHAR_EQ for `char`
 - [x] EXPECT_STR_EQ for `const char*`
-- [ ] let EXPECT_EQ take optional error message string
+- [ ] let EXPECT_EQ take an optional error message string
+- [ ] EXPECT_ASSERT for checking `assert` calls (early termination)
 
 ### Test filtering
 - [ ] filter test based on prefix
+- [ ] don't run tests prefixex by `DISABLED_`
 
 ### Test reporting
 - [x] print start and end of test runner
 - [x] print start of test suite
 - [x] print num passed tests at end of run
 - [ ] print num failed tests at end of run
+- [ ] print name of failed tests
 
 ### Test timing
 - [ ] print test case duration in ms
