@@ -1,6 +1,6 @@
 #include "r2k_test/r2k_test.h"
 
-#include "r2k_test/internal/r2k_string_util.h"
+#include <string.h>
 
 void dummy_tests(void) {
     TEST_SUITE_START();
@@ -42,10 +42,21 @@ void dummy_tests(void) {
     TEST_SUITE_END();
 }
 
+void other_tests(void) {
+    TEST_SUITE_START();
+
+    TEST(strcmp_equal_strings) {
+        EXPECT_TRUE(strcmp("aaa", "bbb") == 0);
+    }
+
+    TEST_SUITE_END();
+}
+
 int main(int argc, char** argv) {
     r2k_test_start(argc, argv);
 
     dummy_tests();
+    other_tests();
 
     return r2k_test_end();
 }
