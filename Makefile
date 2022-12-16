@@ -8,6 +8,7 @@ endif
 
 SRC = \
 	src/internal/r2k_string_util.c \
+	src/internal/r2k_timer.c \
 	src/r2k_test_assert.c \
 	src/r2k_test_runner.c \
 	src/r2k_test_suite.c \
