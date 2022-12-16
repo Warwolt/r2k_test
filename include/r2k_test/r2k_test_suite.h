@@ -11,6 +11,7 @@ typedef struct r2k_test_case {
     const char* name;
     bool successful;
     bool skipped;
+    r2k_timer_t timer;
 } r2k_test_case_t;
 
 typedef struct r2k_test_suite {

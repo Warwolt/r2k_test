@@ -91,6 +91,7 @@ bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
     }
 
     // start current test
+    suite->timer = r2k_timer_start();
     suite->num_ran_tests += 1;
     suite->test_runner->num_tests += 1;
     printf_green("[ RUN      ] ");
@@ -111,6 +112,10 @@ void r2k_test_case_end(r2k_test_suite_t* suite) {
         suite->test_runner->num_failed_tests += 1;
         printf_red("[  FAILED  ] ");
     }
-    printf("%s.%s (0 ms)\n", suite->name, suite->current_test.name);
+    printf("%s.%s (%d ms)\n",
+        suite->name,
+        suite->current_test.name,
+        r2k_timer_stop(&suite->timer).value
+    );
 }
 

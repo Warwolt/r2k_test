@@ -29,13 +29,13 @@
 ### Test timing
 - [x] print total duration in ms
 - [x] print suite duration in ms
-- [ ] print test case duration in ms
+- [x] print test case duration in ms
 
 ### Code base health
+- [ ] use a CMake for building
 - [ ] go through what should be public and what should be internal
 - [ ] assert that macros and functions called in right order
   - [ ] assert r2k_test_start ran before TEST_SUITE_START
   - [ ] assert TEST_SUITE_START ran before TEST
   - [ ] assert TEST_SUITE_START ran before TEST_SUITE_END
   - [ ] assert TEST_SUITE_END ran before 2nd TEST_SUITE_START
-- [ ] use a CMake for building
