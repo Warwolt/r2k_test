@@ -1,6 +1,10 @@
 .PHONY: clean
 
 OUT_DIR = build
+TARGET := main
+ifeq ($(OS),Windows_NT)
+	TARGET := $(addsuffix .exe,$(TARGET))
+endif
 
 SRC = \
 	src/r2k_test_assert.c \
@@ -12,8 +16,8 @@ SRC = \
 OBJ = $(patsubst %.c,$(OUT_DIR)/%.o,$(SRC))
 DEBS = $(patsubst %.c,$(OUT_DIR)/%.d,$(SRC))
 
-main: $(OBJ)
-	gcc $^ -Iinclude -Wall -Werror -o $(OUT_DIR)/$@
+$(OUT_DIR)/$(TARGET): $(OBJ)
+	gcc $^ -Iinclude -Wall -Werror -o $@
 
 $(OUT_DIR)/%.o: %.c
 	@mkdir -p $(@D)
