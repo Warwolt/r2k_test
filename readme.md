@@ -4,7 +4,7 @@ A small test library for C programs, written to closely mimick [Google Test](htt
 
 Some tweaks are made to the assertion macros in comparison to Google Test due to the type system of C; `EXPECT_EQ` only checks integral types, and other primitive types have their own corresponding macros like `EXPECT_CHAR_EQ`, `EXPECT_PTR_EQ`, and `EXPECT_STR_EQ()`.
 
-## Whirlwind tour
+## Quick tour
 
 Tests in R2K Test are defined with a `TEST()` macro, and the tests are defined inside of a function that becomes the test suite for the tests.These test suites are then ran by calling the corresponding functions from a test runner program.
 
@@ -43,7 +43,7 @@ Running this on the command line gives an output that is very familiar to someon
 
 ![arithmetic_tests_example](docs/arithmetic_tests.png)
 
-Note that the function `void arithmetic_tests()` becomes the test suite name, as seen in e.g. the `arithmetic_tests.addition_is_commutative` output.
+Note that the function name `void arithmetic_tests()` gives the name of the test suite, as seen in e.g. the `arithmetic_tests.addition_is_commutative` output.
 
 ### Asserting in tests
 
