@@ -2,6 +2,7 @@
 #define R2K_TEST_SUITE_H
 
 #include "r2k_test/r2k_test_runner.h"
+#include "r2k_test/internal/r2k_timer.h"
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -16,6 +17,7 @@ typedef struct r2k_test_suite {
     r2k_test_runner_t* test_runner;
     const char* name;
     size_t num_ran_tests;
+    r2k_timer_t timer;
     r2k_test_case_t current_test;
 } r2k_test_suite_t;
 

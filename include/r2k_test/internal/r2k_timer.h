@@ -4,7 +4,7 @@
 #include <sys\timeb.h>
 
 typedef struct r2k_milliseconds {
-    int val;
+    int value;
 } r2k_milliseconds_t;
 
 typedef struct r2k_timer {

@@ -40,6 +40,7 @@ r2k_test_suite_t r2k_test_suite_start(const char* suite_name) {
         .test_runner = test_runner,
         .name = suite_name,
         .num_ran_tests = 0,
+        .timer = r2k_timer_start(),
         .current_test = (r2k_test_case_t) {
             .name = NULL,
             .successful = false,
@@ -53,10 +54,11 @@ void r2k_test_suite_end(r2k_test_suite_t* suite) {
         r2k_test_case_end(suite);
     }
     printf_green("[----------] ");
-    printf("%d test%s from %s (0 ms total)\n\n",
+    printf("%d test%s from %s (%d ms total)\n\n",
         suite->num_ran_tests,
         plural_suffix(suite->num_ran_tests),
-        suite->name
+        suite->name,
+        r2k_timer_stop(&suite->timer).value
     );
 }
 
