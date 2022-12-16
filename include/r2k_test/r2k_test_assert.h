@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "r2k_test/r2k_test_suite.h"
+
 bool r2k_check_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len);
 bool r2k_check_char_eq(char actual, char expected, char* actual_str, char* expected_str, int buf_len);
 bool r2k_check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected_str, int buf_len);
@@ -16,8 +18,8 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
     { \
         char actual_str[100]; \
         char expected_str[100]; \
-        g_suite.current_test.successful = value_checker(_actual, _expected, actual_str, expected_str, 100); \
-        if (!g_suite.current_test.successful) { \
+        _R2K_TEST_SUITE.current_test.successful = value_checker(_actual, _expected, actual_str, expected_str, 100); \
+        if (!_R2K_TEST_SUITE.current_test.successful) { \
             printf("%s:%d: Failure\n", __FILE__, __LINE__); \
             printf("Value of: %s\n", #_actual); \
             printf("  Actual: %s\n", actual_str); \
@@ -29,8 +31,8 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
     { \
         char actual_str[100]; \
         char expected_str[100]; \
-        g_suite.current_test.successful = value_checker(_actual, _expected, abs_error, actual_str, expected_str, 100); \
-        if (!g_suite.current_test.successful) { \
+        _R2K_TEST_SUITE.current_test.successful = value_checker(_actual, _expected, abs_error, actual_str, expected_str, 100); \
+        if (!_R2K_TEST_SUITE.current_test.successful) { \
             printf("%s:%d: Failure\n", __FILE__, __LINE__); \
             printf("Value of: %s\n", #_actual); \
             printf("  Actual: %s\n", actual_str); \
