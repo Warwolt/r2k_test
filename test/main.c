@@ -1,9 +1,5 @@
 #include "r2k_test/r2k_test.h"
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-
 void dummy_tests() {
     TEST_SUITE_START();
 
