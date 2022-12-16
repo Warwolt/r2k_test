@@ -27,9 +27,9 @@
 - [x] print name of failed tests
 
 ### Test timing
+- [x] print total duration in ms
+- [x] print suite duration in ms
 - [ ] print test case duration in ms
-- [ ] print suite duration in ms
-- [ ] print total duration in ms
 
 ### Code base health
 - [ ] go through what should be public and what should be internal

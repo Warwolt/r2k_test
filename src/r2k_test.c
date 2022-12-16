@@ -28,6 +28,9 @@ static void parse_args(int argc, char** argv) {
 }
 
 void r2k_test_start(int argc, char** argv) {
+    r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
+    test_runner->timer = r2k_timer_start();
+
     init_terminal();
     parse_args(argc, argv);
 
@@ -40,7 +43,7 @@ void r2k_test_start(int argc, char** argv) {
 
 r2k_test_result_t r2k_test_end() {
     r2k_test_result_t result = R2K_TEST_OK;
-    const r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
+    r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
 
     printf_green("[----------] ");
     printf("Global test environment tear-down\n");
@@ -51,7 +54,7 @@ r2k_test_result_t r2k_test_end() {
         plural_suffix(test_runner->num_tests),
         test_runner->num_suites,
         plural_suffix(test_runner->num_suites),
-        test_runner->total_milliseconds
+        r2k_timer_stop(&test_runner->timer).value
     );
 
     printf_green("[  PASSED  ] ");
