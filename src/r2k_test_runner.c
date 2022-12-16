@@ -14,6 +14,6 @@ void _r2k_internal_init_test_runner() {
     };
 }
 
-r2k_test_runner_t* _r2k_internal_get_test_runner() {
+r2k_test_runner_t* r2k_internal_get_test_runner() {
     return &g_test_runner;
 }

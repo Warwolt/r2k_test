@@ -6,32 +6,39 @@
 #include <stdbool.h>
 #include <string.h>
 
-// TODO move most of this into a function in a `r2k_test_suite.h` file
-#define TEST_SUITE_START() \
-    r2k_test_suite_t g_suite = (r2k_test_suite_t) { \
-        .test_runner = _r2k_internal_get_test_runner(), \
-        .name = __func__, \
-        .num_ran_tests = 0, \
-        .current_test = { \
-            .name = NULL, \
-            .successful = false, \
-        }, \
-    }; \
-    g_suite.test_runner->num_suites += 1; \
-    printf_green("[----------] "); \
-    printf("Running tests from %s\n", __func__)
+r2k_test_suite_t r2k_test_suite_start(void) {
+    r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
+    test_runner->num_suites += 1;
 
+    printf_green("[----------] ");
+    printf("Running tests from %s\n", __func__);
 
-#define TEST_SUITE_END() \
-    if (g_suite.num_ran_tests > 0) { \
-        r2k_test_case_end(&g_suite); \
-    } \
-    printf_green("[----------] "); \
-    printf("%d test%s from %s (0 ms total)\n\n", \
-        g_suite.num_ran_tests, \
-        plural_suffix(g_suite.num_ran_tests), \
-        g_suite.name \
-    )
+    return (r2k_test_suite_t) {
+        .test_runner = test_runner,
+        .name = __func__,
+        .num_ran_tests = 0,
+        .current_test = {
+            .name = NULL,
+            .successful = false,
+        },
+    };
+}
+
+void r2k_test_suite_end(r2k_test_suite_t* suite) {
+    if (suite->num_ran_tests > 0) {
+        r2k_test_case_end(suite);
+    }
+    printf_green("[----------] ");
+    printf("%d test%s from %s (0 ms total)\n\n",
+        suite->num_ran_tests,
+        plural_suffix(suite->num_ran_tests),
+        suite->name
+    );
+}
+
+#define TEST_SUITE_START() r2k_test_suite_t g_suite = r2k_test_suite_start()
+
+#define TEST_SUITE_END() r2k_test_suite_end(&g_suite)
 
 #define TEST(test_name) r2k_test_case_start(&g_suite, #test_name);
 

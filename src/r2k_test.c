@@ -22,7 +22,7 @@ void r2k_test_start(void) {
 }
 
 r2k_test_result_t r2k_test_end() {
-    const r2k_test_runner_t* test_runner = _r2k_internal_get_test_runner();
+    const r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
 
     printf_green("[----------] ");
     printf("Global test environment tear-down\n");
