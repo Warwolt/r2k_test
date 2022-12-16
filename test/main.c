@@ -1,7 +1,6 @@
 #include "r2k_test/r2k_test.h"
 
 #include <string.h>
-#include <sys\timeb.h>
 
 void dummy_tests(void) {
     TEST_SUITE_START();
