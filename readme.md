@@ -2,7 +2,7 @@
 
 A small test library for C programs, written to closely mimick [Google Test](https://github.com/google/googletest). This is intended as a library that is lightweight and easy to integrate into a C project to add testing capabilities.
 
-Some tweaks are made to the assertion macros in comparison to Google Test due to the type system of C; `EXPECT_EQ` only checks integral types, and other primitive types have their own corresponding macros like `EXPECT_CHAR_EQ`, `EXPECT_PTR_EQ`, and `EXPECT_STR_EQ()`.
+Some tweaks are made to the assertion macros in comparison to Google Test due to the type system of C; `EXPECT_EQ` only checks integral types, and other primitive types have their own corresponding macros like `EXPECT_CHAR_EQ`, `EXPECT_PTR_EQ`, and `EXPECT_STR_EQ`.
 
 ## Whirlwind tour
 
