@@ -16,8 +16,8 @@
   - [x] exact match
   - [x] wildcard
   - [x] print out that filter is active
-- [ ] don't run tests prefixex by `DISABLED_`
-  - [ ] print out num disabled tests
+- [x] don't run tests prefixex by `DISABLED_`
+  - [x] print out num disabled tests
 
 ### Test reporting
 - [x] print start and end of test runner

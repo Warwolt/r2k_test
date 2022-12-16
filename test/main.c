@@ -49,7 +49,7 @@ void other_tests(void) {
         EXPECT_TRUE(strcmp("aaa", "aaa") == 0);
     }
 
-    TEST(DISABLED_strcmp_unequal_strings) {
+    TEST(strcmp_unequal_strings) {
         EXPECT_TRUE(strcmp("aaa", "bbb") == 0);
     }
 
