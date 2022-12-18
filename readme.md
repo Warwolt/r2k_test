@@ -161,6 +161,8 @@ The following section will detail the macros that can be used to verify that val
 
 Some tweaks are made to the assertion macros in comparison to Google Test due to the type system of C; `EXPECT_EQ` only checks integral types, and other primitive types have their own corresponding macros like `EXPECT_EQ_CHAR`, `EXPECT_EQ_PTR`, and `EXPECT_EQ_STR`.
 
+Using the correct assertion macro will make sure that the best kind of error details can be provided if the assertion fails. For example, `EXPECT_EQ_CHAR` will print the actual character instead of the numeric value of the characters passed to it.
+
 **WARNING:** due to the way that `ASSERT_*` macros are implemented, you should **not** call an `ASSERT_*` macro inside of a loop!
 
 | Macro name                                      | Type        | Assertion                                    |
