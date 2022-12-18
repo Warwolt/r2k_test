@@ -96,11 +96,6 @@ void asterix_match_tests(void) {
     TEST_SUITE_END();
 }
 
-void string_util_tests(void) {
-    starts_with_tests();
-    asterix_match_tests();
-}
-
 void test_suite_tests(void) {
     // can't use TEST_SUITE_START() since we're testing r2k_should_skip_suite
     r2k_test_suite_t R2K_TEST_SUITE = r2k_test_suite_start(__func__);
@@ -132,7 +127,49 @@ void test_suite_tests(void) {
     TEST_SUITE_END();
 }
 
+void assertion_tests(void) {
+    TEST_SUITE_START();
+
+    TEST(expect_true) {
+        EXPECT_TRUE(5 > 4);
+    }
+
+    TEST(expect_false) {
+        EXPECT_FALSE(2 > 3);
+    }
+
+    TEST(expect_eq) {
+        EXPECT_EQ(2 + 2, 4);
+    }
+
+    TEST(expect_eq_char) {
+        EXPECT_EQ_CHAR('b', 'a' + 1);
+    }
+
+    TEST(expect_eq_ptr) {
+        int a;
+        int b;
+        EXPECT_EQ_PTR(&a, &b + 1);
+    }
+
+    TEST(expect_eq_str) {
+        EXPECT_EQ_STR("hello", "hello");
+    }
+
+    TEST(expect_near_float) {
+        EXPECT_NEAR_FLOAT(0.2f + 0.1f, 0.1f + 0.1f + 0.1f, 0.001f);
+    }
+
+    TEST(expect_near_double) {
+        EXPECT_NEAR_FLOAT(0.2 + 0.1, 0.1 + 0.1 + 0.1, 0.001);
+    }
+
+    TEST_SUITE_END();
+}
+
 void internal_tests(void) {
-    string_util_tests();
+    starts_with_tests();
+    asterix_match_tests();
     test_suite_tests();
+    assertion_tests();
 }
