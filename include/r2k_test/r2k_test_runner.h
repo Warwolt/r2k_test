@@ -1,7 +1,7 @@
 #ifndef R2K_TEST_RUNNER_H
 #define R2K_TEST_RUNNER_H
 
-#include "r2k_test/internal/r2k_timer.h"
+#include <r2k_test/internal/r2k_timer.h>
 
 #include <stddef.h>
 

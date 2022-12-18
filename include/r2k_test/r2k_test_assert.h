@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "r2k_test/r2k_test_suite.h"
+#include <r2k_test/r2k_test_suite.h>
 
 /**
  * EXPECT_* macros

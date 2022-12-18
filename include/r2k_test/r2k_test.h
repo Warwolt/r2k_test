@@ -1,9 +1,9 @@
 #ifndef R2K_TEST_H
 #define R2K_TEST_H
 
-#include "r2k_test/r2k_test_assert.h"
-#include "r2k_test/r2k_test_runner.h"
-#include "r2k_test/r2k_test_suite.h"
+#include <r2k_test/r2k_test_assert.h>
+#include <r2k_test/r2k_test_runner.h>
+#include <r2k_test/r2k_test_suite.h>
 
 #include <stddef.h>
 #include <stdbool.h>

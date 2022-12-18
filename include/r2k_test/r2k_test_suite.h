@@ -1,8 +1,8 @@
 #ifndef R2K_TEST_SUITE_H
 #define R2K_TEST_SUITE_H
 
-#include "r2k_test/r2k_test_runner.h"
-#include "r2k_test/internal/r2k_timer.h"
+#include <r2k_test/r2k_test_runner.h>
+#include <r2k_test/internal/r2k_timer.h>
 
 #include <stdbool.h>
 #include <stddef.h>
