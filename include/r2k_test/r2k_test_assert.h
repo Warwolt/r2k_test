@@ -49,7 +49,6 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
 /**
  * RUN_* macros
  */
-
 #define RUN_EXPECT_BOOL(actual, bool_val) \
     { \
         bool actual_val = actual; \

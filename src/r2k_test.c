@@ -28,9 +28,6 @@ static void parse_args(int argc, char** argv) {
 }
 
 void r2k_test_start(int argc, char** argv) {
-    r2k_test_runner_t* test_runner = _r2k_get_test_runner();
-    test_runner->timer = r2k_timer_start();
-
     init_terminal();
     parse_args(argc, argv);
 
@@ -39,11 +36,15 @@ void r2k_test_start(int argc, char** argv) {
 
     printf_green("[----------] ");
     printf("Global test environment set-up.\n");
+
+    r2k_test_runner_t* test_runner = _r2k_get_test_runner();
+    test_runner->timer = r2k_timer_start();
 }
 
 r2k_test_result_t r2k_test_end() {
     r2k_test_result_t result = R2K_TEST_OK;
     r2k_test_runner_t* test_runner = _r2k_get_test_runner();
+    r2k_milliseconds_t test_time = r2k_timer_stop(&test_runner->timer);
 
     printf_green("[----------] ");
     printf("Global test environment tear-down\n");
@@ -54,7 +55,7 @@ r2k_test_result_t r2k_test_end() {
         plural_suffix(test_runner->num_tests),
         test_runner->num_suites,
         plural_suffix(test_runner->num_suites),
-        r2k_timer_stop(&test_runner->timer).value
+        test_time.value
     );
 
     printf_green("[  PASSED  ] ");
@@ -68,17 +69,16 @@ r2k_test_result_t r2k_test_end() {
             printf_red("[  FAILED  ] ");
             printf("%s\n", test_runner->failed_test_names[i]);
         }
-    }
 
-    printf("\n");
-
-    if (num_failed_tests > 0) {
-        printf(" %d FAILED TEST\n%s",
+        printf("\n %d FAILED TEST\n%s",
             num_failed_tests,
             uppercase_plural_suffix(num_failed_tests)
         );
 
         result = R2K_TEST_FAILED;
+    }
+    else {
+        printf("\n");
     }
 
     const size_t num_disabled_tests = test_runner->num_disabled_tests;
