@@ -1,22 +1,37 @@
 #include "r2k_test/internal/r2k_string_util.h"
 
-bool starts_with(const char* restrict string, const char* restrict prefix) {
-    return strncmp(prefix, string, strlen(prefix)) == 0;
+#include <limits.h>
+#include <stdio.h>
+
+bool starts_with(const char* restrict str, const char* restrict prefix) {
+    return strncmp(prefix, str, strlen(prefix)) == 0;
 }
 
-// returns true if either lhs == rhs or matches up until asterix
-// FIXME: this should fail if prefix is longer than string
-bool wildcard_prefix_match(const char* prefix, const char* string) {
-    while (*prefix && *string) {
-        if (*prefix == '*') {
-            return true; // prefix matches
+bool asterix_match(const char* pattern, const char* str) {
+    return asterix_match_substr(pattern, str, INT_MAX);
+}
+
+bool asterix_match_substr(const char* pattern, const char* str, size_t len) {
+    size_t i = 0;
+    while (*pattern && *str && i < len) {
+        if (*pattern == '*') {
+            return true; // asterix match
         }
-        if (*prefix != *string) {
-            return false; // not matching
+        if (*pattern != *str) {
+            return false; // no match
         }
-        prefix++;
-        string++;
+        pattern++;
+        str++;
+        i++;
     }
 
-    return true;
+    if (i == len && string_empty(pattern)) {
+        return true; // matches substring
+    }
+
+    if (!(string_empty(str) && string_empty(pattern))) {
+        return false; // not same length, so couldn't have matched
+    }
+
+    return true; // same length, so exact match
 }

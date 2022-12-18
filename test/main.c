@@ -19,7 +19,7 @@ void arithmetic_tests(void) {
 int main(int argc, char** argv) {
     r2k_test_start(argc, argv);
 
-    arithmetic_tests();
+    // arithmetic_tests();
     internal_tests();
 
     return r2k_test_end();

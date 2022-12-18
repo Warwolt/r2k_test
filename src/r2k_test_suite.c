@@ -22,7 +22,7 @@ static skip_reason_t should_skip_test(const char* filter, const char* suite_name
 
     char full_test_name[100];
     snprintf(full_test_name, 100, "%s.%s", suite_name, test_name);
-    if (!wildcard_prefix_match(filter, full_test_name)) {
+    if (!asterix_match(filter, full_test_name)) {
         return SKIP_REASON_IS_FILTERED;
     }
 
@@ -62,9 +62,12 @@ void r2k_test_suite_end(r2k_test_suite_t* suite) {
     );
 }
 
-bool r2k_should_skip_suite(const char* test_filter, const char* suite_name) {
-    // if filter doesn't match suite name, it won't match the full test name either
-    return !(string_empty(test_filter) || wildcard_prefix_match(test_filter, suite_name));
+bool r2k_should_skip_suite(const char* suite_name, const char* test_filter) {
+    // if (string_empty(test_filter)) {
+    //     return false;
+    // }
+    // return asterix_match(suite_name, test_filter);
+    return false;
 }
 
 bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
