@@ -154,7 +154,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-When you run this test runner, the full name of the test we added will be `hello_world_tests.hello_world`. For a complete example of a test runner, see the [basic usage](samples/sample1_basic_usage.c) file.
+When you run this test runner, the full name of the test we added will be `hello_world_tests.hello_world`. For a complete example of a test runner, see the [basic usage](samples/sample1_basic_usage.c) sample file.
 
 ## Assertion macros
 The following section will detail the macros that can be used to verify that values hold the expected values inside of `TEST()` blocks.
