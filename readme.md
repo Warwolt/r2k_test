@@ -18,7 +18,7 @@ Here's an example unit test file:
 ```C
 #include <r2k_test/r2k_test.h>
 
-void arithmetic_tests() {
+void arithmetic_tests(void) {
     TEST_SUITE_START();
 
     TEST(addition_is_commutative) {
@@ -113,7 +113,7 @@ To add a test suite to this test runner, all we need to do is add a function and
 ```C
 #include <r2k_test/r2k_test.h>
 
-void hello_world_tests() {
+void hello_world_tests(void) {
     TEST_SUITE_START();
 
     // test cases go here
@@ -135,7 +135,7 @@ The name of the test suite will be the same as the function, so in this case the
 ```C
 #include <r2k_test/r2k_test.h>
 
-void hello_world_tests() {
+void hello_world_tests(void) {
     TEST_SUITE_START();
 
     TEST(hello_world) {

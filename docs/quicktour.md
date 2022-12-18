@@ -10,7 +10,7 @@ Here's an example test runner program with a test suite `arithmetic_tests`:
 ```C
 #include <r2k_test/r2k_test.h>
 
-void arithmetic_tests() {
+void arithmetic_tests(void) {
     TEST_SUITE_START();
 
     TEST(addition_is_commutative) {
@@ -37,7 +37,7 @@ Running this on the command line gives an output that is very familiar to someon
 
 ![arithmetic_tests_example](arithmetic_tests.png)
 
-Note that the function name `void arithmetic_tests()` gives the name of the test suite, as seen in e.g. the `arithmetic_tests.addition_is_commutative` output.
+Note that the function name `void arithmetic_tests(void)` gives the name of the test suite, as seen in e.g. the `arithmetic_tests.addition_is_commutative` output.
 
 ## Asserting in tests
 
