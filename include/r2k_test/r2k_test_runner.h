@@ -20,6 +20,6 @@ typedef struct r2k_test_runner {
     r2k_timer_t timer;
 } r2k_test_runner_t;
 
-r2k_test_runner_t* r2k_internal_get_test_runner();
+r2k_test_runner_t* _r2k_get_test_runner();
 
 #endif // R2K_TEST_RUNNER_H

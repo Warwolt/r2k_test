@@ -30,7 +30,7 @@ static skip_reason_t should_skip_test(const char* filter, const char* suite_name
 }
 
 r2k_test_suite_t r2k_test_suite_start(const char* suite_name) {
-    r2k_test_runner_t* test_runner = r2k_internal_get_test_runner();
+    r2k_test_runner_t* test_runner = _r2k_get_test_runner();
     test_runner->num_suites += 1;
 
     printf_green("[----------] ");
