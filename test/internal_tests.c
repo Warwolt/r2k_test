@@ -75,13 +75,19 @@ void asterix_match_tests(void) {
         EXPECT_TRUE(asterix_match_substr("pizza", "pizza pie", strlen("pizza")));
     }
 
-    TEST(pattern_shorter_than_substring_does_not_asterix_match) {
+    TEST(pattern_shorter_than_substring_does_not_match) {
         EXPECT_FALSE(asterix_match_substr("c", "cupcake", strlen("cup")));
         EXPECT_FALSE(asterix_match_substr("br", "breadsticks", strlen("bread")));
         EXPECT_FALSE(asterix_match_substr("piz", "pizza pie", strlen("pizza")));
     }
 
-    TEST(pattern_longer_than_substring_does_not_asterix_match) {
+    TEST(pattern_with_asterix_shorter_than_substring_does_match) {
+        EXPECT_TRUE(asterix_match_substr("c*", "cupcake", strlen("cup")));
+        EXPECT_TRUE(asterix_match_substr("br*", "breadsticks", strlen("bread")));
+        EXPECT_TRUE(asterix_match_substr("piz*", "pizza pie", strlen("pizza")));
+    }
+
+    TEST(pattern_longer_than_substring_does_not_match) {
         EXPECT_FALSE(asterix_match_substr("cup", "cupcake", strlen("c")));
         EXPECT_FALSE(asterix_match_substr("bread", "breadsticks", strlen("br")));
         EXPECT_FALSE(asterix_match_substr("pizza", "pizza pie", strlen("piz")));
@@ -91,7 +97,7 @@ void asterix_match_tests(void) {
 }
 
 void string_util_tests(void) {
-    // starts_with_tests();
+    starts_with_tests();
     asterix_match_tests();
 }
 
@@ -101,6 +107,10 @@ void test_suite_tests(void) {
 
     TEST(suite_skipped_if_suite_name_differs_from_filter) {
         EXPECT_TRUE(r2k_should_skip_suite("foo_suite", "some_filter"));
+    }
+
+    TEST(suite_skipped_if_suite_name_differs_from_filter_with_asterix) {
+        EXPECT_TRUE(r2k_should_skip_suite("foo_suite", "some_*"));
     }
 
     TEST(suite_not_skipped_if_test_filter_empty) {
@@ -124,5 +134,5 @@ void test_suite_tests(void) {
 
 void internal_tests(void) {
     string_util_tests();
-    // test_suite_tests();
+    test_suite_tests();
 }

@@ -1,7 +1,6 @@
 #include "r2k_test/internal/r2k_string_util.h"
 
 #include <limits.h>
-#include <stdio.h>
 
 bool starts_with(const char* restrict str, const char* restrict prefix) {
     return strncmp(prefix, str, strlen(prefix)) == 0;

@@ -52,4 +52,4 @@
   - [ ] assert TEST_SUITE_START ran before TEST
   - [ ] assert TEST_SUITE_START ran before TEST_SUITE_END
   - [ ] assert TEST_SUITE_END ran before 2nd TEST_SUITE_START
-- [ ] bugfix the filter prefix matching (it always uses the shorter string as the prefix right now)
+- [x] bugfix the filter prefix matching (it always uses the shorter string as the prefix right now)
