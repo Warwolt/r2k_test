@@ -14,7 +14,7 @@ SRC = \
 	src/r2k_test_suite.c \
 	src/r2k_test.c \
 	test/main.c \
-	test/string_util_tests.c \
+	test/internal_tests.c \
 
 INC = -I. -Iinclude
 

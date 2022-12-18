@@ -1,6 +1,6 @@
 #include <r2k_test/r2k_test.h>
 
-#include "test/string_util_tests.h"
+#include "test/internal_tests.h"
 
 void arithmetic_tests(void) {
     TEST_SUITE_START();
@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     r2k_test_start(argc, argv);
 
     arithmetic_tests();
-    string_util_tests();
+    internal_tests();
 
     return r2k_test_end();
 }
