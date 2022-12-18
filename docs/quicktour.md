@@ -37,7 +37,7 @@ Running this on the command line gives an output that is very familiar to someon
 
 ![arithmetic_tests_example](arithmetic_tests.png)
 
-Note that the function name `void arithmetic_tests(void)` gives the name of the test suite, as seen in e.g. the `arithmetic_tests.addition_is_commutative` output.
+Note that the function name `void arithmetic_tests(void)` gives the name of the test suite.
 
 ## Asserting in tests
 
