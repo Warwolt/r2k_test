@@ -31,6 +31,6 @@ void r2k_test_case_end(r2k_test_suite_t* suite);
 #define R2K_TEST_SUITE g_test_suite
 #define TEST_SUITE_START() if (r2k_should_skip_suite(__func__, _r2k_get_test_runner()->test_filter)) return; r2k_test_suite_t R2K_TEST_SUITE = r2k_test_suite_start(__func__)
 #define TEST_SUITE_END() r2k_test_suite_end(&R2K_TEST_SUITE)
-#define TEST(test_name) if (r2k_test_case_start(&R2K_TEST_SUITE, #test_name))
+#define TEST(test_name) for (bool start = r2k_test_case_start(&R2K_TEST_SUITE, #test_name); start; start = false)
 
 #endif // R2K_TEST_SUITE_H

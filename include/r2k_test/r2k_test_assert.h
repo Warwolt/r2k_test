@@ -7,6 +7,37 @@
 
 #include "r2k_test/r2k_test_suite.h"
 
+/**
+ * EXPECT_* macros
+ */
+#define EXPECT_TRUE(actual) RUN_EXPECT_BOOL(actual, true)
+#define EXPECT_FALSE(actual) RUN_EXPECT_BOOL(actual, false)
+
+#define EXPECT_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_int_eq)
+#define EXPECT_EQ_CHAR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_char_eq)
+#define EXPECT_EQ_PTR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_ptr_eq)
+#define EXPECT_EQ_STR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_str_eq)
+
+#define EXPECT_NEAR_FLOAT(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_float_near)
+#define EXPECT_NEAR_DOUBLE(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_double_near)
+
+/**
+ * ASSERT_* macros
+ */
+#define ASSERT_TRUE(actual) EXPECT_TRUE(actual); if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_FALSE(actual) EXPECT_FALSE(actual); if (!R2K_TEST_SUITE.current_test.successful) break;
+
+#define ASSERT_EQ(actual, expected) EXPECT_EQ(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_EQ_CHAR(actual, expected) EXPECT_EQ_CHAR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_EQ_PTR(actual, expected) EXPECT_EQ_PTR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_EQ_STR(actual, expected) EXPECT_EQ_STR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
+
+#define ASSERT_NEAR_FLOAT(actual, expected, abs_error) EXPECT_NEAR_FLOAT(actual, expected, abs_error) if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_NEAR_DOUBLE(actual, expected, abs_error) EXPECT_NEAR_DOUBLE(actual, expected, abs_error) if (!R2K_TEST_SUITE.current_test.successful) break;
+
+/**
+ * Checker functions
+ */
 bool r2k_check_int_eq(int actual, int expected, char* actual_str, char* expected_str, int buf_len);
 bool r2k_check_char_eq(char actual, char expected, char* actual_str, char* expected_str, int buf_len);
 bool r2k_check_ptr_eq(void* actual, void* expected, char* actual_str, char* expected_str, int buf_len);
@@ -14,6 +45,10 @@ bool r2k_check_str_eq(const char* actual, const char* expected, char* actual_str
 
 bool r2k_check_float_near(float actual, float expected, float abs_error, char* diff_str, char* actual_str, char* expected_str, int buf_len);
 bool r2k_check_double_near(double actual, double expected, float abs_error, char* diff_str, char* actual_str, char* expected_str, int buf_len);
+
+/**
+ * RUN_* macros
+ */
 
 #define RUN_EXPECT_BOOL(actual, bool_val) \
     { \
@@ -60,16 +95,5 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
             printf("%s evaluates to %f\n", #abs_error, abs_error); \
         } \
     }
-
-#define EXPECT_TRUE(actual) RUN_EXPECT_BOOL(actual, true)
-#define EXPECT_FALSE(actual) RUN_EXPECT_BOOL(actual, false)
-
-#define EXPECT_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_int_eq)
-#define EXPECT_EQ_CHAR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_char_eq)
-#define EXPECT_EQ_PTR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_ptr_eq)
-#define EXPECT_EQ_STR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_str_eq)
-
-#define EXPECT_NEAR_FLOAT(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_float_near)
-#define EXPECT_NEAR_DOUBLE(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_double_near)
 
 #endif // R2K_TEST_ASSERT_H

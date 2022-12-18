@@ -13,8 +13,11 @@
   - to add a message, you would use the `EXPECT_EQ_INFO` macro, otherwise plain `EXPECT_EQ`
   - `#define EXPECT_EQ(actual, expected) EXPECT_EQ_INFO(actual, expected, "")`
 - [ ] EXPECT_EXIT for early termination
-- [ ] ASSERT_* macros corresponding to each EXPECT_*
-  - [ ] asserting should immediately fail and continue to next test case
+- [x] ASSERT_* macros corresponding to each EXPECT_*
+  - asserting should immediately fail and continue to next test case
+  - [ ] Implement ASSERT_* macros in a way that supports loops inside the test
+    - currently, calling ASSERT_* inside a loop will break that loop instead of the test
+    - although looping inside a test isn't recommended, the current ASSERT_* behavior might be surprising
 
 ### Test filtering
 - [x] filter test based on prefix

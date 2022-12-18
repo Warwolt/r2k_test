@@ -132,36 +132,44 @@ void assertion_tests(void) {
 
     TEST(expect_true) {
         EXPECT_TRUE(5 > 4);
+        ASSERT_TRUE(5 > 4);
     }
 
     TEST(expect_false) {
         EXPECT_FALSE(2 > 3);
+        ASSERT_FALSE(2 > 3);
     }
 
     TEST(expect_eq) {
         EXPECT_EQ(2 + 2, 4);
+        ASSERT_EQ(2 + 2, 4);
     }
 
     TEST(expect_eq_char) {
         EXPECT_EQ_CHAR('b', 'a' + 1);
+        ASSERT_EQ_CHAR('b', 'a' + 1);
     }
 
     TEST(expect_eq_ptr) {
         int a;
         int b;
         EXPECT_EQ_PTR(&a, &b + 1);
+        ASSERT_EQ_PTR(&a, &b + 1);
     }
 
     TEST(expect_eq_str) {
         EXPECT_EQ_STR("hello", "hello");
+        ASSERT_EQ_STR("hello", "hello");
     }
 
     TEST(expect_near_float) {
         EXPECT_NEAR_FLOAT(0.2f + 0.1f, 0.1f + 0.1f + 0.1f, 0.001f);
+        ASSERT_NEAR_FLOAT(0.2f + 0.1f, 0.1f + 0.1f + 0.1f, 0.001f);
     }
 
     TEST(expect_near_double) {
         EXPECT_NEAR_FLOAT(0.2 + 0.1, 0.1 + 0.1 + 0.1, 0.001);
+        ASSERT_NEAR_FLOAT(0.2 + 0.1, 0.1 + 0.1 + 0.1, 0.001);
     }
 
     TEST_SUITE_END();
