@@ -1,6 +1,8 @@
 #include <r2k_test/r2k_test.h>
 
-void arithmetic_tests() {
+#include "test/string_util_tests.h"
+
+void arithmetic_tests(void) {
     TEST_SUITE_START();
 
     TEST(addition_is_commutative) {
@@ -18,6 +20,7 @@ int main(int argc, char** argv) {
     r2k_test_start(argc, argv);
 
     arithmetic_tests();
+    string_util_tests();
 
     return r2k_test_end();
 }

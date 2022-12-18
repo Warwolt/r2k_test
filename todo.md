@@ -8,7 +8,10 @@
 - [x] EXPECT_NEAR for `float` and `double`
 - [x] EXPECT_CHAR_EQ for `char`
 - [x] EXPECT_STR_EQ for `const char*`
-- [ ] let EXPECT_EQ take an optional error message formatting string (fmt, ...)
+- [ ] let EXPECT_EQ take an optional error message
+  - add an EXPECT_EQ_INFO(actual, expected, fmt, ...) macro that EXPECT_EQ wraps?
+  - to add a message, you would use the `EXPECT_EQ_INFO` macro, otherwise plain `EXPECT_EQ`
+  - `#define EXPECT_EQ(actual, expected) EXPECT_EQ_INFO(actual, expected, "")`
 - [ ] EXPECT_EXIT for early termination
 - [ ] ASSERT_* macros corresponding to each EXPECT_*
   - [ ] asserting should immediately fail and continue to next test case
@@ -32,6 +35,14 @@
 - [x] print total duration in ms
 - [x] print suite duration in ms
 - [x] print test case duration in ms
+- [ ] figure out how to exclude test printf from timing
+  - Compared to gtest, tests are reported to take several ms when doing trivial work
+  - The test time is probably dominated by IO, which we shouldn't be measuring
+  - All test output should happen before or after the test timer has run
+
+### Advanced testing
+- [ ] sketch out an idea on how to support parameterized tests (P_TEST)
+- [ ] sketch out an idea on how to support property testing (QuickCheck)
 
 ### Code base health
 - [ ] use a CMake for building
