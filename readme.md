@@ -61,7 +61,7 @@ add_subdirectory(external/r2k_test)
 and:
 
 ```
-target_link_libraries(<your-test-runner> PRIVATE my_lib)
+target_link_libraries(<your-test-runner> PRIVATE r2k_test)
 ```
 
 where `<your-test-runner>` is the executable that will run the tests. For example test runners, see the `sample` directory.
