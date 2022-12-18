@@ -82,7 +82,48 @@ Here's an example of running the test program with the `--test_filter=arithmetic
 ![arithmetic_tests_filtered_example](docs/arithmetic_tests_filtered.png)
 
 ## Build instructions
-(todo)
+R2K Test is a CMake based project. The recommended way to integrate R2K Test into your project is to first clone it as submodule, and then add it as a dependency to your top-level `CMakeLists.txt` file.
+
+To add it as a submodule, from the root of your project run:
+
+```bash
+mkdir external
+cd external
+git submodule add https://github.com/Warwolt/r2k_test.git
+```
+
+Then, in your top-level `CMakeLists.txt` file, add:
+
+```
+add_subdirectory(external/r2k_test)
+```
+
+and:
+
+```
+target_link_libraries(<your-test-runner> PRIVATE my_lib)
+```
+
+where `<your-test-runner>` is the executable that will run the tests. For example test runners, see the `sample` directory.
+
+### Building the samples and unit tests
+This project is bundled with its own internal unit tests, and some sample test runners. In order to build them, first navigate into the root of this project from your command line. Then run:
+
+```
+cmake -B build -Dr2ktest_build_tests=ON -Dr2ktest_build_samples=ON .
+```
+
+To run the built executables, run the following:
+
+```bash
+./build/unit_tests
+```
+
+or
+
+```bash
+./build/sample1_basic_usage
+```
 
 ## Assertion macros
 (todo)

@@ -48,7 +48,7 @@
 - [ ] sketch out an idea on how to support property testing (QuickCheck)
 
 ### Code base health
-- [ ] use a CMake for building
+- [x] use a CMake for building
 - [ ] go through what should be public and what should be internal
 - [ ] assert that macros and functions called in right order
   - [ ] assert r2k_test_start ran before TEST_SUITE_START
