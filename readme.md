@@ -4,7 +4,8 @@ A small test library for C programs, written to closely mimick [Google Test](htt
 
 R2K Test has the following features:
 - Quick compilation time
-- Simple to define tests, a test suite is simply a function
+- ISO C99 compliant
+- Simple to define tests; a test suite is simply a function, and test cases are block statements within that function
 - ASSERT_EQ and EXPECT_EQ macros for fatal and non-fatal checks (see [Assertion macros](#assertion-macros))
 - Google Test style test reporting with colors
 - Disable tests by prefixing them with `DISABLE_`
@@ -86,12 +87,81 @@ or
 ```
 
 ## Writing tests
-(todo)
+Since C is a procedural programming language, R2K Test is procedural as well. Unlike Google Test, where tests can auto-register themselves, in R2K Test a test is run if someone calls it. To make it easy to add tests, the following principles are used:
+
+- A test suite is a function
+- A test case is a block statement inside of a test suite function
+
+Every test case will run one after the other inside of the test suite as soon as the suite is called, and all test suites are called from a `main` function in a test runner program.
+
+The test runner program `main` will look like this:
+
+```C
+#include <r2k_test/r2k_test.h>
+
+int main(int argc, char** argv) {
+    r2k_test_start(argc, argv);
+
+    // test suites called here
+
+    return r2k_test_end();
+}
+```
+
+To add a test suite to this test runner, all we need to do is add a function and call it. A function becomes a test suite by the function including the `TEST_SUITE_START()` and `TEST_SUITE_END()` macros:
+
+```C
+#include <r2k_test/r2k_test.h>
+
+void hello_world_tests() {
+    TEST_SUITE_START();
+
+    // test cases go here
+
+    TEST_SUITE_END();
+}
+
+int main(int argc, char** argv) {
+    r2k_test_start(argc, argv);
+
+    hello_world_tests();
+
+    return r2k_test_end();
+}
+```
+
+The name of the test suite will be the same as the function, so in this case the test suite we added will be called `hello_world`. To add test cases to the `hello_world` test suite, we add a `{}` block prefixed with the `TEST()` macro, which is passed the name of the test case.
+
+```C
+#include <r2k_test/r2k_test.h>
+
+void hello_world_tests() {
+    TEST_SUITE_START();
+
+    TEST(hello_world) {
+        EXPECT_EQ(1 + 1, 2);
+    }
+
+    TEST_SUITE_END();
+}
+
+int main(int argc, char** argv) {
+    r2k_test_start(argc, argv);
+
+    hello_world_tests();
+
+    return r2k_test_end();
+}
+```
+
+When you run this test runner, the full name of the test we added will be `hello_world_tests.hello_world`. For a complete example of a test runner, see the [basic usage](samples/sample1_basic_usage.c) file.
 
 ## Assertion macros
 The following section will detail the macros that can be used to verify that values hold the expected values inside of `TEST()` blocks.
 
 Some tweaks are made to the assertion macros in comparison to Google Test due to the type system of C; `EXPECT_EQ` only checks integral types, and other primitive types have their own corresponding macros like `EXPECT_EQ_CHAR`, `EXPECT_EQ_PTR`, and `EXPECT_EQ_STR`.
+
+**WARNING:** due to the way that `ASSERT_*` macros are implemented, you should **not** call an `ASSERT_*` macro inside of a loop!
 
 | Macro name                                      | Type        | Assertion                                    |
 | ----------------------------------------------- | ----------- | -------------------------------------------- |
@@ -106,4 +176,4 @@ Some tweaks are made to the assertion macros in comparison to Google Test due to
 
 Every `EXPECT_*` macro has a corresponding `ASSERT_*` macro. A test will continue running if an `EXPECT_*` macro fails, but will stop if an `ASSERT_*` macro fails.
 
-**WARNING:** due to the way that `ASSERT_*` macros are implemented, you should **not** call an `ASSERT_*` macro inside of a loop!
+
