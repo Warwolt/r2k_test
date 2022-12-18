@@ -1,4 +1,4 @@
-#include "r2k_test/r2k_test_runner.h"
+#include <r2k_test/r2k_test_runner.h>
 
 #include <assert.h>
 

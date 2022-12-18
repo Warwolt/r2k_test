@@ -1,4 +1,4 @@
-#include "r2k_test/internal/r2k_timer.h"
+#include <r2k_test/internal/r2k_timer.h>
 
 r2k_timer_t r2k_timer_start(void) {
     r2k_timer_t timer;

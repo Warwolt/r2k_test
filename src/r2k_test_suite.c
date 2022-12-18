@@ -1,8 +1,8 @@
-#include "r2k_test/r2k_test_suite.h"
+#include <r2k_test/r2k_test_suite.h>
 
-#include "r2k_test/internal/r2k_color_print.h"
-#include "r2k_test/internal/r2k_print_util.h"
-#include "r2k_test/internal/r2k_string_util.h"
+#include <r2k_test/internal/r2k_color_print.h>
+#include <r2k_test/internal/r2k_print_util.h>
+#include <r2k_test/internal/r2k_string_util.h>
 
 typedef enum skip_reason {
     SKIP_REASON_IS_FILTERED,

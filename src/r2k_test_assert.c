@@ -1,4 +1,4 @@
-#include "r2k_test/r2k_test_assert.h"
+#include <r2k_test/r2k_test_assert.h>
 
 #include <ctype.h>
 #include <stdbool.h>

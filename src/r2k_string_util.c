@@ -1,4 +1,4 @@
-#include "r2k_test/internal/r2k_string_util.h"
+#include <r2k_test/internal/r2k_string_util.h>
 
 #include <limits.h>
 
