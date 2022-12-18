@@ -98,9 +98,9 @@ Some tweaks are made to the assertion macros in comparison to Google Test due to
 | EXPECT_TRUE(actual)                             | booelan     | `actual` equals `true`                       |
 | EXPECT_FALSE(actual)                            | booelan     | `actual` equals `false`                      |
 | EXPECT_EQ(actual, expected)                     | integer     | `actual` is the same integer as `expected`   |
-| EXPECT_EQ_CHAR(actual, expected)                | character   | `actual` is the same integer as `expected`   |
-| EXPECT_EQ_PTR(actual, expected)                 | pointer     | `actual` is the same integer as `expected`   |
-| EXPECT_EQ_STR(actual, expected)                 | const char* | `actual` is the same integer as `expected`   |
+| EXPECT_EQ_CHAR(actual, expected)                | character   | `actual` is the same character as `expected` |
+| EXPECT_EQ_PTR(actual, expected)                 | pointer     | `actual` is the same pointer as `expected`   |
+| EXPECT_EQ_STR(actual, expected)                 | const char* | `actual` is the same string as `expected`    |
 | EXPECT_NEAR_FLOAT(actual, expected, abs_error)  | float       | `actual` is within `abs_error` of `expected` |
 | EXPECT_NEAR_DOUBLE(actual, expected, abs_error) | double      | `actual` is within `abs_error` of `expected` |
 
