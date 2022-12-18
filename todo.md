@@ -6,8 +6,8 @@
   - [x] write to buffer and make single printf call
   - [x] evaluate `actual` and `expected` only once in assertion
 - [x] EXPECT_NEAR for `float` and `double`
-- [x] EXPECT_CHAR_EQ for `char`
-- [x] EXPECT_STR_EQ for `const char*`
+- [x] EXPECT_EQ_CHAR for `char`
+- [x] EXPECT_EQ_STR for `const char*`
 - [ ] let EXPECT_EQ take an optional error message
   - add an EXPECT_EQ_INFO(actual, expected, fmt, ...) macro that EXPECT_EQ wraps?
   - to add a message, you would use the `EXPECT_EQ_INFO` macro, otherwise plain `EXPECT_EQ`

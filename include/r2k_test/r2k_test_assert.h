@@ -65,11 +65,11 @@ bool r2k_check_double_near(double actual, double expected, float abs_error, char
 #define EXPECT_FALSE(actual) RUN_EXPECT_BOOL(actual, false)
 
 #define EXPECT_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_int_eq)
-#define EXPECT_CHAR_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_char_eq)
-#define EXPECT_PTR_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_ptr_eq)
-#define EXPECT_STR_EQ(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_str_eq)
+#define EXPECT_EQ_CHAR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_char_eq)
+#define EXPECT_EQ_PTR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_ptr_eq)
+#define EXPECT_EQ_STR(actual, expected) RUN_EXPECT_EQ(actual, expected, r2k_check_str_eq)
 
-#define EXPECT_FLOAT_NEAR(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_float_near)
-#define EXPECT_DOUBLE_NEAR(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_double_near)
+#define EXPECT_NEAR_FLOAT(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_float_near)
+#define EXPECT_NEAR_DOUBLE(actual, expected, abs_error) RUN_EXPECT_NEAR(actual, expected, abs_error, r2k_check_double_near)
 
 #endif // R2K_TEST_ASSERT_H
