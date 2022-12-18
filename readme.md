@@ -109,8 +109,9 @@ where `<your-test-runner>` is the executable that will run the tests. For exampl
 ### Building the samples and unit tests
 This project is bundled with its own internal unit tests, and some sample test runners. In order to build them, first navigate into the root of this project from your command line. Then run:
 
-```
+```bash
 cmake -B build -Dr2ktest_build_tests=ON -Dr2ktest_build_samples=ON .
+cmake --build build
 ```
 
 To run the built executables, run the following:
