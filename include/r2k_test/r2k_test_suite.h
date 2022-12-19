@@ -12,6 +12,9 @@ typedef struct r2k_test_case {
     bool successful;
     bool skipped;
     r2k_timer_t timer;
+    // these two used for parameterized tests:
+    bool is_parameterized;
+    size_t iter;
 } r2k_test_case_t;
 
 typedef struct r2k_test_suite {
@@ -27,10 +30,19 @@ r2k_test_suite_t r2k_test_suite_start(const char* suite_name);
 void r2k_test_suite_end(r2k_test_suite_t* suite);
 bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name);
 void r2k_test_case_end(r2k_test_suite_t* suite);
+bool r2k_param_test_case_start(r2k_test_suite_t* suite, const char* test_name, size_t test_iter);
+void r2k_param_test_case_end(r2k_test_suite_t* suite, size_t test_iter);
 
 #define R2K_TEST_SUITE g_test_suite
-#define TEST_SUITE_START() if (r2k_should_skip_suite(__func__, _r2k_get_test_runner()->test_filter)) return; r2k_test_suite_t R2K_TEST_SUITE = r2k_test_suite_start(__func__)
+#define TEST_SUITE_START() if (r2k_should_skip_suite(__func__, _r2k_get_test_runner()->test_filter)) return; r2k_test_suite_t R2K_TEST_SUITE = r2k_test_suite_start(__func__); size_t r2k_index; (void)(r2k_index)
 #define TEST_SUITE_END() r2k_test_suite_end(&R2K_TEST_SUITE)
 #define TEST(test_name) for (bool start = r2k_test_case_start(&R2K_TEST_SUITE, #test_name); start; start = false)
+#define TEST_P(test_name, type, ...) \
+    type test_name##_params[] = {__VA_ARGS__}; \
+    r2k_index = 0; \
+    if (r2k_param_test_case_start(&R2K_TEST_SUITE, #test_name, 0)) \
+        for (type r2k_param = test_name##_params[0]; r2k_index + 1 < sizeof(test_name##_params)/sizeof(test_name##_params[0]); r2k_index++, r2k_param_test_case_start(&R2K_TEST_SUITE, #test_name, r2k_index), r2k_param = test_name##_params[r2k_index])
+
+#define get_param() r2k_param
 
 #endif // R2K_TEST_SUITE_H

@@ -31,14 +31,19 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 # R2K Test sample files
 #
 if(r2ktest_build_samples)
-    add_executable(sample1_basic_usage
-        samples/sample1_basic_usage.c
-        ${SRC}
-    )
 
-    target_include_directories(sample1_basic_usage PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-    )
+    if(MSVC)
+        add_compile_options(/W4 /WX)
+    else()
+        add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+    endif()
+
+    add_executable(sample1_basic_usage ${SRC} samples/sample1_basic_usage.c)
+    target_include_directories(sample1_basic_usage PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+    add_executable(sample2_parameterized_tests ${SRC} samples/sample2_parameterized_tests.c)
+    target_include_directories(sample2_parameterized_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 endif(r2ktest_build_samples)
 
 #

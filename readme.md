@@ -5,11 +5,12 @@ A small test library for C programs, written to closely mimick [Google Test](htt
 R2K Test has the following features:
 - Quick compilation time
 - ISO C99 compliant
-- Simple to define tests; a test suite is simply a function, and test cases are block statements within that function
+- Simple to define tests; test suites are functions, and test cases are block statements within those functions
 - ASSERT_EQ and EXPECT_EQ macros for fatal and non-fatal checks (see [Assertion macros](#assertion-macros))
 - Google Test style test reporting with colors
 - Disable tests by prefixing them with `DISABLE_`
 - Filter tests with `--test-filter=<pattern>`
+- Parameterized tests
 
 Want to know more? Check out the [quick tour](./docs/quicktour.md)!
 
@@ -156,6 +157,43 @@ int main(int argc, char** argv) {
 
 When you run this test runner, the full name of the test we added will be `hello_world_tests.hello_world`. For a complete example of a test runner, see the [basic usage](samples/sample1_basic_usage.c) sample file.
 
+## Parameterized tests
+R2K Test supports a simplified version of parameterized tests, that are defined with the `TEST_P` macro. A parameterized test will be ran once for each value in its parameter list, which means that the test can check that its assertions hold for all of those values.
+
+The parameterized test macro `TEST_P(test_name, parameter_type, parameters)` takes the name of the test, the type of the parameter and then a comma separated list of values to run the test for.
+
+Inside of the test, the current test parameter is accessed with the `get_param()` macro.
+
+The tests in the arithmetic test suite makes statement about "all numbers". Although we can't reasonably check every number, we can still test that the assertions hold for more than one case by using a `P_TEST`:
+
+```C
+typedef struct int_pair {
+    int x;
+    int y;
+} int_pair_t;
+
+void arithmetic_tests(void) {
+    TEST_SUITE_START();
+
+    P_TEST(addition_is_commutative, int_pair_t, {1,2}, {2,3}, {3,4}) {
+        int x = get_param().x;
+        int y = get_param().y;
+        EXPECT_EQ(x + y, y + x);
+    }
+
+    P_TEST(zero_is_additive_identity, int, 1, 2, 3) {
+        int num = get_param();
+        EXPECT_EQ(num + 0, num);
+    }
+
+    TEST_SUITE_END();
+}
+```
+
+When running the `arithmetic_tests` suite, it will now run 6 tests instead of just 2, since we have supplied 3 values each to both tests in the suite.
+
+**Note:** Unlike Google Test, R2K Test does no support printing out the value of the current test parameter upon failure, since C lacks the ability to stringify an arbitray run-time value.
+
 ## Assertion macros
 The following section will detail the macros that can be used to verify that values hold the expected values inside of `TEST()` blocks.
 
@@ -163,7 +201,7 @@ Some tweaks are made to the assertion macros in comparison to Google Test due to
 
 Using the correct assertion macro will make sure that the best kind of error details can be provided if the assertion fails. For example, `EXPECT_EQ_CHAR` will print the actual character instead of the numeric value of the characters passed to it.
 
-**WARNING:** due to the way that `ASSERT_*` macros are implemented, you should **not** call an `ASSERT_*` macro inside of a loop!
+**WARNING:** due to the way that `ASSERT_*` macros are implemented, you should **not** call an `ASSERT_*` macro inside of a loop! If you need assert over a range of values, consider to instead use a [parameterized test](#parameterized-tests).
 
 | Macro name                                      | Type        | Assertion                                    |
 | ----------------------------------------------- | ----------- | -------------------------------------------- |
