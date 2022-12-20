@@ -4,6 +4,10 @@
 #include <r2k_test/internal/r2k_print_util.h>
 #include <r2k_test/internal/r2k_string_util.h>
 
+#include <math.h>
+
+#define MAX_PARAM_STR_LEN 100
+
 typedef enum skip_reason {
     SKIP_REASON_IS_FILTERED,
     SKIP_REASON_IS_DISABLED,
@@ -11,19 +15,17 @@ typedef enum skip_reason {
 } skip_reason_t;
 
 static skip_reason_t should_skip_test(const char* filter, const char* suite_name, const char* test_name) {
-    // only match against filter if it's non-empty
-    if (string_empty(filter)) {
-        // if not filtered, check if disabled
-        if (starts_with(test_name, "DISABLED_")) {
-            return SKIP_REASON_IS_DISABLED;
-        }
-        return SKIP_REASON_NONE;
+    if (starts_with(test_name, "DISABLED_")) {
+        return SKIP_REASON_IS_DISABLED;
     }
 
-    char full_test_name[100];
-    snprintf(full_test_name, 100, "%s.%s", suite_name, test_name);
-    if (!asterix_match(filter, full_test_name)) {
-        return SKIP_REASON_IS_FILTERED;
+    // only match against filter if it's non-empty
+    if (!string_empty(filter)) {
+        char full_test_name[100];
+        snprintf(full_test_name, 100, "%s.%s", suite_name, test_name);
+        if (!asterix_match(filter, full_test_name)) {
+            return SKIP_REASON_IS_FILTERED;
+        }
     }
 
     return SKIP_REASON_NONE;
@@ -185,20 +187,32 @@ void r2k_param_test_case_end(r2k_test_suite_t* suite, size_t test_iter) {
 
     if (suite->current_test.successful) {
         suite->test_runner->num_passed_tests += 1;
+
         printf_green("[       OK ] ");
+        printf("%s.%s/%d (%d ms)\n",
+            suite->name,
+            suite->current_test.name,
+            test_iter,
+            suite_time.value
+        );
     } else {
+        suite->test_runner->num_failed_tests += 1;
+
+        char param_str[MAX_PARAM_STR_LEN] = {0};
+        str_slice_t slice = get_brace_list_value(suite->current_test.parameter_list, test_iter);
+        strncpy(param_str, slice.str, fmin(slice.len, MAX_PARAM_STR_LEN));
+
         // add test name to list of failed tests
         char* failed_test_name = suite->test_runner->failed_test_names[suite->test_runner->num_failed_tests];
-        snprintf(failed_test_name, R2K_MAX_FAILED_TEST_STR_LEN, "%s.%s/%d", suite->name, suite->current_test.name, test_iter);
+        snprintf(failed_test_name, R2K_MAX_FAILED_TEST_STR_LEN, "%s.%s/%d, where get_param() = %s", suite->name, suite->current_test.name, test_iter, param_str);
 
-        suite->test_runner->num_failed_tests += 1;
         printf_red("[  FAILED  ] ");
+        printf("%s.%s/%d, where get_param() = %s (%d ms)\n",
+            suite->name,
+            suite->current_test.name,
+            test_iter,
+            param_str,
+            suite_time.value
+        );
     }
-
-    printf("%s.%s/%d (%d ms)\n",
-        suite->name,
-        suite->current_test.name,
-        test_iter,
-        suite_time.value
-    );
 }

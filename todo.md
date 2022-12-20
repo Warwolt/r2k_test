@@ -12,7 +12,15 @@
   - add an EXPECT_EQ_INFO(actual, expected, fmt, ...) macro that EXPECT_EQ wraps?
   - to add a message, you would use the `EXPECT_EQ_INFO` macro, otherwise plain `EXPECT_EQ`
   - `#define EXPECT_EQ(actual, expected) EXPECT_EQ_INFO(actual, expected, "")`
-- [ ] ~~EXPECT_EXIT for early termination~~
+- [ ] EXPECT_EXIT for early termination
+  - EXPECT_EXIT(expected_exit_code, statement)
+    1. running EXPECT_EXIT() macro sets meta-deta about its position
+    2. new process is started with test runner, passing meta-data
+    3. the new test runner skips everything until it finds the EXPECT_EXIT with correct tag
+    4. this time actually runs the statement in the EXPECT_EXIT argument
+    5. terminates process with exit code 0 at end of macro, unless statement already terminated
+    6. parent process now resumes, and inspects the exit code
+    7. assertion passes if actual exit code matches expected
 - [x] ASSERT_* macros corresponding to each EXPECT_*
   - asserting should immediately fail and continue to next test case
   - [ ] Implement ASSERT_* macros in a way that supports loops inside the test
@@ -50,6 +58,7 @@
 ### Code base health
 - [x] use a CMake for building
 - [ ] go through what should be public and what should be internal
+- [ ] add `r2k_*` prefix to _every_ function and structure
 - [ ] assert that macros and functions called in right order
   - [ ] assert r2k_test_start ran before TEST_SUITE_START
   - [ ] assert TEST_SUITE_START ran before TEST

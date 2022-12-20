@@ -3,6 +3,7 @@
 #include <r2k_test/internal/r2k_string_util.h>
 
 #include <string.h>
+#include <math.h>
 
 void starts_with_tests(void) {
     TEST_SUITE_START();
@@ -94,9 +95,74 @@ void asterix_match_tests(void) {
     TEST_SUITE_END();
 }
 
+void get_brace_list_value_tests(void) {
+    TEST_SUITE_START();
+
+    TEST(empty_list_gives_empty_substring) {
+        str_slice_t slice = get_brace_list_value("", 0);
+        EXPECT_TRUE(string_empty(slice.str));
+        EXPECT_EQ(slice.len, 0);
+    }
+
+    TEST(single_valued_list_can_give_first_value) {
+        str_slice_t slice = get_brace_list_value("a", 0);
+        EXPECT_EQ_STR(slice.str, "a");
+        EXPECT_EQ(slice.len, strlen("a"));
+    }
+
+    TEST(two_valued_list_can_give_second_value) {
+        str_slice_t slice = get_brace_list_value("ab,cd", 1);
+        EXPECT_EQ_STR(slice.str, "cd");
+        EXPECT_EQ(slice.len, strlen("cd"));
+    }
+
+    TEST(three_valued_list_can_give_first_value) {
+        char str[25] = { 0 };
+        str_slice_t slice = get_brace_list_value("ab,cd,ef", 0);
+        strncpy(str, slice.str, slice.len);
+
+        EXPECT_EQ_STR(str, "ab");
+        EXPECT_EQ(slice.len, strlen("ab"));
+    }
+
+    TEST(trims_spaces_before_value) {
+        str_slice_t slice = get_brace_list_value("before, after", 1);
+        EXPECT_EQ_STR(slice.str, "after");
+        EXPECT_EQ(slice.len, strlen("after"));
+    }
+
+    TEST(trims_spaces_before_and_after_value) {
+        char str[25] = { 0 };
+        str_slice_t slice = get_brace_list_value("beginning, end ", 1);
+        strncpy(str, slice.str, slice.len);
+
+        EXPECT_EQ_STR(str, "end");
+        EXPECT_EQ(slice.len, strlen("end"));
+    }
+
+    TEST(commas_inside_braces_are_ignored) {
+        char str[25] = { 0 };
+        str_slice_t slice = get_brace_list_value("{a,b},{c,d}", 1);
+        strncpy(str, slice.str, slice.len);
+
+        EXPECT_EQ_STR(str, "{c,d}");
+        EXPECT_EQ(slice.len, strlen("{c,d}"));
+    }
+
+    TEST(braces_can_be_nested) {
+        char str[25] = { 0 };
+        str_slice_t slice = get_brace_list_value("{{a,b},{c,d}}, {{e,f},{g,h}}", 1);
+        strncpy(str, slice.str, slice.len);
+
+        EXPECT_EQ_STR(str, "{{e,f},{g,h}}");
+        EXPECT_EQ(slice.len, strlen("{{e,f},{g,h}}"));
+    }
+
+    TEST_SUITE_END();
+}
+
 void test_suite_tests(void) {
-    // can't use TEST_SUITE_START() since we're testing r2k_should_skip_suite
-    r2k_test_suite_t R2K_TEST_SUITE = r2k_test_suite_start(__func__);
+    TEST_SUITE_START();
 
     TEST(suite_skipped_if_suite_name_differs_from_filter) {
         EXPECT_TRUE(r2k_should_skip_suite("foo_suite", "some_filter"));
@@ -178,6 +244,7 @@ int main(int argc, char** argv) {
 
     starts_with_tests();
     asterix_match_tests();
+    get_brace_list_value_tests();
     test_suite_tests();
     assertion_tests();
 

@@ -24,16 +24,16 @@
 /**
  * ASSERT_* macros
  */
-#define ASSERT_TRUE(actual) EXPECT_TRUE(actual); if (!R2K_TEST_SUITE.current_test.successful) break;
-#define ASSERT_FALSE(actual) EXPECT_FALSE(actual); if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_TRUE(actual) EXPECT_TRUE(actual); if (!R2K_TEST_SUITE.current_test.successful) continue;
+#define ASSERT_FALSE(actual) EXPECT_FALSE(actual); if (!R2K_TEST_SUITE.current_test.successful) continue;
 
-#define ASSERT_EQ(actual, expected) EXPECT_EQ(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
-#define ASSERT_EQ_CHAR(actual, expected) EXPECT_EQ_CHAR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
-#define ASSERT_EQ_PTR(actual, expected) EXPECT_EQ_PTR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
-#define ASSERT_EQ_STR(actual, expected) EXPECT_EQ_STR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_EQ(actual, expected) EXPECT_EQ(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) continue;
+#define ASSERT_EQ_CHAR(actual, expected) EXPECT_EQ_CHAR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) continue;
+#define ASSERT_EQ_PTR(actual, expected) EXPECT_EQ_PTR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) continue;
+#define ASSERT_EQ_STR(actual, expected) EXPECT_EQ_STR(actual, expected); if (!R2K_TEST_SUITE.current_test.successful) continue;
 
-#define ASSERT_NEAR_FLOAT(actual, expected, abs_error) EXPECT_NEAR_FLOAT(actual, expected, abs_error) if (!R2K_TEST_SUITE.current_test.successful) break;
-#define ASSERT_NEAR_DOUBLE(actual, expected, abs_error) EXPECT_NEAR_DOUBLE(actual, expected, abs_error) if (!R2K_TEST_SUITE.current_test.successful) break;
+#define ASSERT_NEAR_FLOAT(actual, expected, abs_error) EXPECT_NEAR_FLOAT(actual, expected, abs_error) if (!R2K_TEST_SUITE.current_test.successful) continue;
+#define ASSERT_NEAR_DOUBLE(actual, expected, abs_error) EXPECT_NEAR_DOUBLE(actual, expected, abs_error) if (!R2K_TEST_SUITE.current_test.successful) continue;
 
 /**
  * Checker functions
