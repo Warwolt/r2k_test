@@ -3,14 +3,13 @@
 A small test library for C programs, written to closely mimick [Google Test](https://github.com/google/googletest). This is intended as a library that is lightweight and easy to integrate into a C project to add testing capabilities.
 
 R2K Test has the following features:
-- Quick compilation time
 - ISO C99 compliant
-- Simple to define tests; test suites are functions, and test cases are block statements within those functions
-- ASSERT_EQ and EXPECT_EQ macros for fatal and non-fatal checks (see [Assertion macros](#assertion-macros))
-- Google Test style test reporting with colors
+- Simple to define tests; test suites are functions, and test cases are block statements within those functions (see [Writing tests](#writing-tests))
+- fatal and non-fatal assertions (see [Assertion macros](#assertion-macros))
+- Google Test style test reporting with colored output
 - Disable tests by prefixing them with `DISABLE_`
 - Filter tests with `--test-filter=<pattern>`
-- Parameterized tests
+- [Parameterized tests](#parameterized-tests)
 
 Want to know more? Check out the [quick tour](./docs/quicktour.md)!
 
