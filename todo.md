@@ -44,7 +44,7 @@
   - All test output should happen before or after the test timer has run
 
 ### Advanced testing
-- [ ] sketch out an idea on how to support parameterized tests (P_TEST)
+- [x] sketch out an idea on how to support parameterized tests (P_TEST)
 - [ ] sketch out an idea on how to support property testing (QuickCheck)
 
 ### Code base health
