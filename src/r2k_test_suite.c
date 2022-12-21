@@ -69,18 +69,6 @@ void r2k_test_suite_end(r2k_test_suite_t* suite) {
     );
 }
 
-bool r2k_should_skip_suite(const char* suite_name, const char* test_filter) {
-    // don't skip if no filter
-    if (string_empty(test_filter)) {
-        return false;
-    }
-
-    bool suite_name_is_prefix_of_filter = asterix_match_substr(suite_name, test_filter, strlen(suite_name));
-    bool filter_matches_suite = asterix_match(test_filter, suite_name);
-
-    return !(suite_name_is_prefix_of_filter || filter_matches_suite);
-}
-
 bool r2k_test_case_start(r2k_test_suite_t* suite, const char* test_name) {
     // finish previous test if it wasn't skipped
     if (suite->num_ran_tests > 0 && !suite->current_test.skipped) {
@@ -216,3 +204,16 @@ void r2k_param_test_case_end(r2k_test_suite_t* suite, size_t test_iter) {
         );
     }
 }
+
+bool r2k_should_skip_suite(const char* suite_name, const char* test_filter) {
+    // only skip if filter non-empty
+    if (string_empty(test_filter)) {
+        return false;
+    }
+
+    bool suite_name_is_prefix_of_filter = asterix_match_substr(suite_name, test_filter, strlen(suite_name));
+    bool filter_matches_suite = asterix_match(test_filter, suite_name);
+
+    return !(suite_name_is_prefix_of_filter || filter_matches_suite);
+}
+

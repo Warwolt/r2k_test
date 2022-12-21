@@ -9,7 +9,8 @@ R2K Test has the following features:
 - Google Test style test reporting with colored output
 - Disable tests by prefixing them with `DISABLE_`
 - Filter tests with `--test-filter=<pattern>`
-- [Parameterized tests](#parameterized-tests)
+- Run the same test case with different values (see [Parameterized tests](#parameterized-tests))
+- Test that a statement terminates the program (see [Death tests](#death-tests))
 
 Want to know more? Check out the [quick tour](./docs/quicktour.md)!
 
@@ -190,6 +191,34 @@ void arithmetic_tests(void) {
 ```
 
 When running the `arithmetic_tests` suite, it will now run 6 tests instead of just 2, since we have supplied 3 values each to both tests in the suite.
+
+## Death tests
+When programming defensively, it's common to use `assert` or other checks to verify that some condition holds true, and stop the program with an error message if it does not. Examples of this could be checking that some infrastructure exists, like a database, or checking that an argument holds allowed values. To be able to test such checks, the program termination itself needs to be observed. Death tests enables this by running the check in a new sub-process, and observing that the process terminates in the expected manner.
+
+The exit code and the `stderr` output can then be inspected for the expected values. A death test is written with the `EXPECT_EXIT(statement, expected_exit_code, stderr_regex)` macro. The `statement` is either a single statement, or a block statement, that should trigger the program termination. The `expected_exit_code` is the code the program should terminate with, and `stderr_regex` is a regex that will be matched against the captured `stderr` output, so that expected error messages can be checked.
+
+```C
+double checked_sqrt(double x) {
+    if (x < 0) {
+        fprintf(stderr, "%s: cannot take square root of negative number %f\n", __func__, x);
+        exit(1);
+    }
+
+    return sqrt(x);
+}
+
+void arithmetic_tests(void) {
+    TEST_SUITE_START();
+
+    TEST(taking_square_root_of_negative_number_is_an_error) {
+        EXPECT_EXIT(checked_sqrt(-1), 1, "checked_sqrt: cannot take square root of negative number -1.0");
+    }
+
+    TEST_SUITE_END();
+}
+```
+
+The example above uses a version of `sqrt` that requires its argument to be non-negative, and terminates otherwise. When the function runs, it will see the `-1` argument and exit with code `1` and print an error message. The expected error message ends with "-1.0", which has fewer zeros than the `fprintf` will print, but since this is a regex and the matching isn't strict, the regex will match and the test will pass.
 
 ## Assertion macros
 The following section will detail the macros that can be used to verify that values hold the expected values inside of `TEST()` blocks.

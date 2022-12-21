@@ -1,6 +1,7 @@
 #include <r2k_test/r2k_test.h>
 #include <r2k_test/r2k_test_suite.h>
 #include <r2k_test/internal/r2k_string_util.h>
+#include <r2k_test/internal/r2k_arraylen.h>
 
 #include <string.h>
 #include <math.h>
@@ -242,9 +243,11 @@ void assertion_tests(void) {
 int main(int argc, char** argv) {
     r2k_test_start(argc, argv);
 
+    // r2k_string_util
     starts_with_tests();
     asterix_match_tests();
     get_brace_list_value_tests();
+
     test_suite_tests();
     assertion_tests();
 

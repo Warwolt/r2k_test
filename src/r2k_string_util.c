@@ -1,7 +1,25 @@
 #include <r2k_test/internal/r2k_string_util.h>
 
 #include <limits.h>
-#include <stdio.h> // debugging
+#include <ctype.h>
+
+bool string_empty(const char* str) {
+    return str && *str == '\0';
+}
+
+bool is_number(const char* str) {
+    if (string_empty(str)) {
+        return false;
+    }
+
+    for (; *str; str++) {
+        if (!isdigit(*str)) {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 bool starts_with(const char* restrict str, const char* restrict prefix) {
     return strncmp(prefix, str, strlen(prefix)) == 0;
