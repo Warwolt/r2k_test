@@ -191,8 +191,6 @@ void arithmetic_tests(void) {
 
 When running the `arithmetic_tests` suite, it will now run 6 tests instead of just 2, since we have supplied 3 values each to both tests in the suite.
 
-**Note:** Unlike Google Test, R2K Test does no support printing out the value of the current test parameter upon failure, since C lacks the ability to stringify an arbitray run-time value.
-
 ## Assertion macros
 The following section will detail the macros that can be used to verify that values hold the expected values inside of `TEST()` blocks.
 
