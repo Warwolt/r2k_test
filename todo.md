@@ -46,10 +46,6 @@
 - [x] print total duration in ms
 - [x] print suite duration in ms
 - [x] print test case duration in ms
-- [x] figure out how to exclude test printf from timing
-  - Compared to gtest, tests are reported to take several ms when doing trivial work
-  - The test time is probably dominated by IO, which we shouldn't be measuring
-  - All test output should happen before or after the test timer has run
 
 ### Advanced testing
 - [x] sketch out an idea on how to support parameterized tests (P_TEST)
@@ -57,8 +53,7 @@
 
 ### Code base health
 - [x] use a CMake for building
-- [ ] go through what should be public and what should be internal
-- [ ] add `r2k_*` prefix to _every_ function and structure
+- [x] go through what should be public and what should be internal
 - [ ] assert that macros and functions called in right order
   - [ ] assert r2k_test_start ran before TEST_SUITE_START
   - [ ] assert TEST_SUITE_START ran before TEST
