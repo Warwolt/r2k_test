@@ -4,7 +4,9 @@ A small test library for C programs, written to closely mimick [Google Test](htt
 
 R2K Test has the following features:
 - ISO C99 compliant
-- Simple to define tests; test suites are functions, and test cases are block statements within those functions (see [Writing tests](#writing-tests))
+- Simple to define tests (see [Writing tests](#writing-tests))
+  - test suites are functions
+  - test cases are block statements within those functions
 - fatal and non-fatal assertions (see [Assertion macros](#assertion-macros))
 - Google Test style test reporting with colored output
 - Disable tests by prefixing them with `DISABLE_`
@@ -193,9 +195,13 @@ void arithmetic_tests(void) {
 When running the `arithmetic_tests` suite, it will now run 6 tests instead of just 2, since we have supplied 3 values each to both tests in the suite.
 
 ## Death tests
-When programming defensively, it's common to use `assert` or other checks to verify that some condition holds true, and stop the program with an error message if it does not. Examples of this could be checking that some infrastructure exists, like a database, or checking that an argument holds allowed values. To be able to test such checks, the program termination itself needs to be observed. Death tests enables this by running the check in a new sub-process, and observing that the process terminates in the expected manner.
+When programming defensively, it's common to use `assert` or other checks to verify that some condition holds true, and stop the program with an error message if it does not. Examples of this could be checking that some infrastructure exists, like a database, or checking that an argument holds allowed values.
 
-The exit code and the `stderr` output can then be inspected for the expected values. A death test is written with the `EXPECT_EXIT(statement, expected_exit_code, stderr_regex)` macro. The `statement` is either a single statement, or a block statement, that should trigger the program termination. The `expected_exit_code` is the code the program should terminate with, and `stderr_regex` is a regex that will be matched against the captured `stderr` output, so that expected error messages can be checked.
+To be able to test such assertions, the program termination itself needs to be observed. Death tests enables this by running the test in a new sub-process, and observing that the process terminates in the expected manner.
+
+A death test is written with the `EXPECT_EXIT(statement, expected_exit_code, stderr_regex)` macro.
+
+The `statement` is either a single statement, or a block statement, that should trigger the program termination. The `expected_exit_code` is the code the program should terminate with, and `stderr_regex` is a regex that will be matched against the captured `stderr` output, so that expected error messages can be checked.
 
 ```C
 double checked_sqrt(double x) {
