@@ -1,7 +1,7 @@
 #ifndef R2K_TIMER_H
 #define R2K_TIMER_H
 
-#include <sys\timeb.h>
+#include <sys/timeb.h>
 
 typedef struct r2k_milliseconds {
     int value;

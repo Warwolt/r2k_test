@@ -8,7 +8,6 @@
 
 #include <tiny-regex-c/re.h>
 
-#include <windows.h>
 #include <string.h>
 #include <stdio.h>
 #include <string.h>
@@ -26,17 +25,6 @@ void r2k_run_death_test(int line_number, const char* executable_path, r2k_test_s
 #else
     #error run_death_test not implemented for POSIX yet!
 #endif
-}
-
-static void fail_death_test_run_win32(r2k_test_runner_t* test_runner) {
-    char result[2];
-    snprintf(result, arraylen(result), "%d", 1);
-
-    HANDLE pipe_handle = (HANDLE)test_runner->death_test.pipe_handle;
-    if (!WriteFile(pipe_handle, result, arraylen(result), NULL, NULL)) {
-        fprintf(stderr, "Failed to write to anonymous pipe, error = %lu\n", GetLastError());
-    }
-    exit(0);
 }
 
 void r2k_fail_death_test_run(r2k_test_runner_t* test_runner) {
