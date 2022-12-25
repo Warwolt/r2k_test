@@ -61,7 +61,7 @@ void r2k_test_suite_end(r2k_test_suite_t* suite) {
         }
     }
     printf_green("[----------] ");
-    printf("%d test%s from %s (%d ms total)\n\n",
+    printf("%ld test%s from %s (%d ms total)\n\n",
         suite->num_ran_tests,
         plural_suffix(suite->num_ran_tests),
         suite->name,
@@ -162,7 +162,7 @@ bool r2k_param_test_case_start(r2k_test_suite_t* suite, const char* test_name, s
 
     // start current test
     printf_green("[ RUN      ] ");
-    printf("%s.%s/%d\n", suite->name, suite->current_test.name, test_iter);
+    printf("%s.%s/%ld\n", suite->name, suite->current_test.name, test_iter);
     suite->timer = r2k_timer_start();
     suite->num_ran_tests += 1;
     suite->test_runner->num_tests += 1;
@@ -177,7 +177,7 @@ void r2k_param_test_case_end(r2k_test_suite_t* suite, size_t test_iter) {
         suite->test_runner->num_passed_tests += 1;
 
         printf_green("[       OK ] ");
-        printf("%s.%s/%d (%d ms)\n",
+        printf("%s.%s/%ld (%d ms)\n",
             suite->name,
             suite->current_test.name,
             test_iter,
@@ -192,7 +192,7 @@ void r2k_param_test_case_end(r2k_test_suite_t* suite, size_t test_iter) {
 
         // add test name to list of failed tests
         char* failed_test_name = suite->test_runner->failed_test_names[suite->test_runner->num_failed_tests];
-        snprintf(failed_test_name, R2K_MAX_FAILED_TEST_STR_LEN, "%s.%s/%d, where get_param() = %s", suite->name, suite->current_test.name, test_iter, param_str);
+        snprintf(failed_test_name, R2K_MAX_FAILED_TEST_STR_LEN, "%s.%s/%ld, where get_param() = %s", suite->name, suite->current_test.name, test_iter, param_str);
 
         printf_red("[  FAILED  ] ");
         printf("%s.%s/%d, where get_param() = %s (%d ms)\n",

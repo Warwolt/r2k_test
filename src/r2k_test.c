@@ -25,6 +25,7 @@ static void parse_test_filter(r2k_test_runner_t* test_runner, const char* arg) {
     strncpy(test_runner->test_filter, arg + strlen(TEST_FILTER_FLAG) + 1, R2K_MAX_TEST_FILTER_LEN);
 }
 
+#ifdef WIN32
 static void parse_death_test_win32(r2k_test_runner_t* test_runner, const char* arg) {
     const char* arg_val = arg + strlen(DEATH_TEST_FLAG) + 1;
 
@@ -40,6 +41,7 @@ static void parse_death_test_win32(r2k_test_runner_t* test_runner, const char* a
     sscanf(pipe_handle_str, "%lu", (unsigned long*)&test_runner->death_test.pipe_handle);
 
 }
+#endif
 
 // --r2k-test-internal-run-death-test=<line_number>,<pipe_handle>
 static void parse_death_test(r2k_test_runner_t* test_runner, const char* arg) {
