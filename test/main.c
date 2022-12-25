@@ -239,8 +239,6 @@ void assertion_tests(void) {
     TEST_SUITE_END();
 }
 
-#include <windows.h>
-
 int main(int argc, char** argv) {
     r2k_test_start(argc, argv);
 
