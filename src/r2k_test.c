@@ -74,7 +74,7 @@ void r2k_test_start(int argc, char** argv) {
     }
 
     if (test_runner->death_test.has_been_started) {
-        printf_yellow("Note: Is running death test for test %s, line %d\n", test_runner->test_filter, test_runner->death_test.line_num);
+        printf_yellow("Note: Is running death test for test %s, line %ld\n", test_runner->test_filter, test_runner->death_test.line_num);
     }
 
     printf_green("[==========] ");
@@ -95,7 +95,7 @@ r2k_test_result_t r2k_test_end() {
     printf("Global test environment tear-down\n");
 
     printf_green("[==========] ");
-    printf("%d test%s from %d test suite%s ran. (%d ms total)\n",
+    printf("%ld test%s from %ld test suite%s ran. (%d ms total)\n",
         test_runner->num_tests,
         plural_suffix(test_runner->num_tests),
         test_runner->num_suites,
@@ -104,18 +104,18 @@ r2k_test_result_t r2k_test_end() {
     );
 
     printf_green("[  PASSED  ] ");
-    printf("%d test%s.\n", test_runner->num_passed_tests, plural_suffix(test_runner->num_passed_tests));
+    printf("%ld test%s.\n", test_runner->num_passed_tests, plural_suffix(test_runner->num_passed_tests));
 
     const size_t num_failed_tests = test_runner->num_failed_tests;
     if (num_failed_tests > 0) {
         printf_red("[  FAILED  ] ");
-        printf("%d test%s, listed below:\n", num_failed_tests, plural_suffix(num_failed_tests));
+        printf("%ld test%s, listed below:\n", num_failed_tests, plural_suffix(num_failed_tests));
         for (size_t i = 0; i < num_failed_tests; i++) {
             printf_red("[  FAILED  ] ");
             printf("%s\n", test_runner->failed_test_names[i]);
         }
 
-        printf("\n %d FAILED TEST\n%s",
+        printf("\n %ld FAILED TEST\n%s",
             num_failed_tests,
             uppercase_plural_suffix(num_failed_tests)
         );
@@ -128,7 +128,7 @@ r2k_test_result_t r2k_test_end() {
 
     const size_t num_disabled_tests = test_runner->num_disabled_tests;
     if (num_disabled_tests > 0) {
-        printf_yellow("  YOU HAVE %d DISABLED TEST%s\n\n",
+        printf_yellow("  YOU HAVE %ld DISABLED TEST%s\n\n",
             num_disabled_tests,
             uppercase_plural_suffix(num_disabled_tests)
         );

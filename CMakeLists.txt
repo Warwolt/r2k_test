@@ -44,14 +44,17 @@ if(r2ktest_build_samples)
         add_compile_options(-Wall -Wextra -Wpedantic -Werror)
     endif()
 
-    add_executable(sample1_basic_usage ${SRC} samples/sample1_basic_usage.c)
+    add_executable(sample1_basic_usage samples/sample1_basic_usage.c)
     target_include_directories(sample1_basic_usage PUBLIC ${INC})
+    target_link_libraries(sample1_basic_usage PRIVATE ${PROJECT_NAME})
 
-    add_executable(sample2_parameterized_tests ${SRC} samples/sample2_parameterized_tests.c)
+    add_executable(sample2_parameterized_tests samples/sample2_parameterized_tests.c)
     target_include_directories(sample2_parameterized_tests PUBLIC ${INC})
+    target_link_libraries(sample2_parameterized_tests PRIVATE ${PROJECT_NAME})
 
-    add_executable(sample3_death_tests ${SRC} samples/sample3_death_tests.c)
+    add_executable(sample3_death_tests samples/sample3_death_tests.c)
     target_include_directories(sample3_death_tests PUBLIC ${INC})
+    target_link_libraries(sample3_death_tests PRIVATE ${PROJECT_NAME})
 
 endif(r2ktest_build_samples)
 

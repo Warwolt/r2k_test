@@ -195,7 +195,7 @@ void r2k_param_test_case_end(r2k_test_suite_t* suite, size_t test_iter) {
         snprintf(failed_test_name, R2K_MAX_FAILED_TEST_STR_LEN, "%s.%s/%ld, where get_param() = %s", suite->name, suite->current_test.name, test_iter, param_str);
 
         printf_red("[  FAILED  ] ");
-        printf("%s.%s/%d, where get_param() = %s (%d ms)\n",
+        printf("%s.%s/%ld, where get_param() = %s (%d ms)\n",
             suite->name,
             suite->current_test.name,
             test_iter,

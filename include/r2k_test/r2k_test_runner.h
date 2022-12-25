@@ -10,9 +10,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#define R2K_MAX_NUM_FAILED_TEST_STR 100
-#define R2K_MAX_FAILED_TEST_STR_LEN 100
-#define R2K_MAX_TEST_FILTER_LEN 100
+#define R2K_MAX_NUM_FAILED_TEST_STR 512
+#define R2K_MAX_FAILED_TEST_STR_LEN 512
+#define R2K_MAX_TEST_FILTER_LEN 512
 
 typedef struct r2k_death_test {
     bool has_been_started; // true if running death test
