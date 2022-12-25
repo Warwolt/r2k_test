@@ -32,6 +32,10 @@ set(INC
 add_library(${PROJECT_NAME} STATIC)
 target_sources(${PROJECT_NAME} PRIVATE ${SRC})
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC})
+find_library(MATH_LIBRARY m)
+if(MATH_LIBRARY)
+    target_link_libraries(${PROJECT_NAME} PUBLIC ${MATH_LIBRARY})
+endif()
 
 #
 # R2K Test sample files
@@ -62,7 +66,8 @@ endif(r2ktest_build_samples)
 # Internal unit tests
 #
 if(r2ktest_build_tests)
-    add_executable(unit_tests test/main.c ${SRC})
+    add_executable(unit_tests test/main.c)
     target_include_directories(unit_tests PUBLIC ${INC})
+    target_link_libraries(unit_tests PRIVATE ${PROJECT_NAME})
 endif(r2ktest_build_tests)
 

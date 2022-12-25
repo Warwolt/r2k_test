@@ -216,10 +216,9 @@ void assertion_tests(void) {
     }
 
     TEST(expect_eq_ptr) {
-        int a;
-        int b;
-        EXPECT_EQ_PTR(&a, &b + 1);
-        ASSERT_EQ_PTR(&a, &b + 1);
+        int a[2];
+        EXPECT_EQ_PTR(&a[1], a + 1);
+        ASSERT_EQ_PTR(&a[1], a + 1);
     }
 
     TEST(expect_eq_str) {

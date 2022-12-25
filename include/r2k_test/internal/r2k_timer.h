@@ -1,15 +1,15 @@
 #ifndef R2K_TIMER_H
 #define R2K_TIMER_H
 
-#include <sys/timeb.h>
+#include <time.h>
 
 typedef struct r2k_milliseconds {
     int value;
 } r2k_milliseconds_t;
 
 typedef struct r2k_timer {
-    struct timeb start;
-    struct timeb end;
+    struct timespec start;
+    struct timespec end;
 } r2k_timer_t;
 
 r2k_timer_t r2k_timer_start();
